@@ -1,0 +1,70 @@
+{
+  "name": "react-redux-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline",
+    "build": "rm -rf assets && cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meibin08/react-redux-chat.git"
+  },
+  "files": [
+    "lib",
+    "src",
+    "es"
+  ],
+  "keywords": [
+    "react",
+    "reactjs",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "flux",
+    "redux"
+  ],
+  "dependencies": {
+    "cross-env": "^1.0.6"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.3.13",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.0.0",
+    "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^*",
+    "css-loader": "^0.23.1",
+    "es6-promise": "^3.2.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "fastclick": "^1.0.6",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.17.0",
+    "iscroll": "^5.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "node-sass": "^3.13.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-imageloader": "^2.1.0",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.3",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.12.0"
+  },
+  "author": "Bin.Mei <meibin08@163.com>,QQ群:386485473",
+  "license": "MIT"
+}

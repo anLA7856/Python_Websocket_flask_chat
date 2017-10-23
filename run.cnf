@@ -1,0 +1,19 @@
+pip install virtualenv
+pip install flask
+pip install flask-script
+#继承bootstrap
+pip install flask-bootstrap
+
+#装flask-moment本地化时间和日期。
+pip install flask-moment
+
+#良好表单体验
+pip install flask-wtf
+#操作数据库
+pip install flask-sqlalchemy
+#数据库迁移框架
+pip install flask-migrate
+
+pip install flask-mail
+
+pip install flask-login
