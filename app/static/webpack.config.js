@@ -72,14 +72,15 @@ if (process.env.NODE_ENV === 'development') {
 	// webpack-dev-server配置
 	config.devServer= {
 		port:8085,
-		// host:"dev.zhongan.com",
+		host:'0.0.0.0',
 		historyApiFallback: true,
 		noInfo: false,
 		publicPath: config.output.publicPath,
 		stats: {
 			colors: true,
 			chunks: false
-		}
+		},
+	 	disableHostCheck: true
 	};
 	config.plugins.push(new webpack.DefinePlugin({
 	  "process.env": {
