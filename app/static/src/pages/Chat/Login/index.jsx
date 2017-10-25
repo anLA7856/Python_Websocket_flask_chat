@@ -1,103 +1,113 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-24
+ * @description：python聊天工具
+ * 这个是登录界面，先更改。
  */
 
 import React, { Component, PropTypes } from 'react';
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import classnames from 'classnames';
 import actions from "src/actions";
 import Sidebar from "../Sidebar/Index";
 import Messages from "../Messages/Index";
-import {fetchJson} from "src/utils/fetch";
+import { fetchJson } from "src/utils/fetch";
 
 
 import './Index.scss';
 
 
 
-class Login extends Component{
-	constructor(props){
-		super(props);
-		this.flag = false;
-    	this.state = {
-    		name: '',
+class Login extends Component {
+    constructor( props ) {
+        debugger;
+        super( props );
+        //自定义set和state
+        this.flag = false;
+        this.state = {
             password: '',
-            error:"请随意输入，账号、密码 格式均为英文+数字"
-    	};
-	}
-	set(e){
-		let {name,value}=e.target;
-		this.setState({
-			[`${name}`]:value
-		});
-	}
-	submit(){
-		let {ACTIONS} = this.props;
-		let {name,password}=this.state;
-        var name_reg = /^([a-zA-Z0-9]+)$/;
-        var pwd_reg = /^([a-zA-Z0-9]){3,15}$/;
-        if(!name.trim() || !name_reg.test(name.trim())){
-            this.setState({error:"请输入正确的账号"});
-            return false;
-        }else if(!password.trim()){
-        	this.setState({error:"请输入您的密码"});
-            return false;
-        }else if(!pwd_reg.test(password.trim())){
-        	this.setState({error:"密码格式有误，请重新输入"});
-            return false;
-        }else{
-        	this.setState({error:"正在登录中……"});
-        	if(this.flag){
-        		return false;
-        	};
-        	this.flag = true;
-        	ACTIONS.chatLogin({
-        		data:{username:name,password:password},
-        		success:(req)=>{
-        			this.flag = false;
-        		},error:()=>{
-        			this.flag = false;
-        		}
-        	});
+            error: "请输入已存在房间号，不存在将新建房间"
         };
     }
-    keyUp(e){
+    //set方法，通过e传过来的target，动态设定值，名字非name！获取name属性里面含有的值
+    set( e ) {
+        let { name, value } = e.target;
+        this.setState( {
+            [`${name}`]: value
+        } );
+    }
+    //提交表单的方法，获取从父类传来的props作为actions。
+    submit() {
 
-        if(e.keyCode === 13){
+        let { ACTIONS } = this.props;
+        //从state里面获取name和password
+        let { password } = this.state;
+        var pwd_reg = /^([a-zA-Z0-9]){3,15}$/;
+        if ( !password.trim() ) {
+            this.setState( { error: "请输入您的房间号" } );
+            return false;
+        } else if ( !pwd_reg.test( password.trim() ) ) {
+            this.setState( { error: "房间号格式有误，请重新输入" } );
+            return false;
+        } else {
+            this.setState( { error: "正在进入中……" } );
+            if ( this.flag ) {
+                return false;
+            };
+            this.flag = true;
+            //用actions这个统一登录类进行登录。有点像jq
+            ACTIONS.chatLogin( {
+                data: { password: password },
+                success: ( req ) => {
+                    this.flag = false;
+                }, error: () => {
+                    this.flag = false;
+                }
+            } );
+        };
+    }
+    //进入大厅聊天室的方法
+    joinHoll() {
+        
+    }
+    keyUp( e ) {
+        //键盘监听，回车
+        if ( e.keyCode === 13 ) {
             this.submit();
         }
     }
-	render(){
-		let {error} = this.state;
-		return ( 
-			<div className="login-form">
-			    <h1>微信客服</h1>
-			    <p className="row account"><input className="lg-inp" maxLength="11" onChange={(e)=>this.set(e)} name="name"  type="text" placeholder="账号"/></p>
-			    <p className="row pwd"><input className="lg-inp" type="password" onChange={(e)=>this.set(e)} onKeyUp={(e)=>this.keyUp(e)} name="password"  placeholder="密码" /></p>
-			    <p className="row-error" id="error" style={{color:"red"}}>{error}</p>
-			    <div className="login-btn">
-			        <a href="javascript:void(0)" id="submit" onClick={()=>this.submit()} >确 定</a>
-			    </div>
-			</div>
-		);
-	}
+    //渲染ui的界面。
+    render() {
+        let { error } = this.state;
+        return (
+            <div className="login-form">
+                <h1>小房间</h1>
+                <p className="row account"><input className="lg-inp" type="text" onChange={( e ) => this.set( e )} onKeyUp={( e ) => this.keyUp( e )} name="password" placeholder="房间号" /></p>
+                <p className="row-error" id="error" style={{ color: "red" }}>{error}</p>
+                <div className="login-btn">
+                    <a href="javascript:void(0)" id="submit" onClick={() => this.submit()} >进入</a>
+                </div>
+                <div className="login-btn1">
+                    <a className="login-holl" href="javascript:void(0)" id="joinHoll" onClick={() => this.joinHoll()}> >>>>>进入公共聊天室</a>
+                </div>
+            </div>
+        );
+    }
 };
 
-let mapStateToProps=(state)=>{
-	let {sessions,user} = state.chatIndex;
-	return {
-		_sessions:sessions,
-		_user:user
-	};
-}; 
-
-let mapDispatchToProps=(dispatch)=>{
-	return {
-		ACTIONS:bindActionCreators(actions,dispatch)
-	};
+let mapStateToProps = ( state ) => {
+    let { sessions, user } = state.chatIndex;
+    return {
+        _sessions: sessions,
+        _user: user
+    };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+
+let mapDispatchToProps = ( dispatch ) => {
+    return {
+        ACTIONS: bindActionCreators( actions, dispatch )
+    };
+};
+export default connect( mapStateToProps, mapDispatchToProps )( Login );
 

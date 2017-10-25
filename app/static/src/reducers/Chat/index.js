@@ -1,7 +1,7 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-25
+ * @description：纯计算函数，用于计算store
  */
 
 import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT} from "src/constants/Chat";
@@ -9,19 +9,24 @@ import Storage from 'src/utils/storage';
 let _stores = new Storage(),
 	Storage_Key = 'username';
 	
-
+//初始化state数据。
 let initStates = {
+		//这个user代表当前用户。img是用户图标
 	user:{
 		name:"Bin",
 		img:"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"
 	},
+	//session代表一段会话，默认是和“使用帮助会话”
 	sessions:[
 		{
+			//会话里面包括id，因为每个和每个都有固定id
 	        id:1,
+	        //包括“使用帮助和默认图标”
 	        user: {
 	            name:"使用帮助",
 	            img:"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"
 	        },
+	        //还包括当前一段会话内容，就是messages
 	        messages:[
 	            {
 	                content:"该示例主要使用了react、redux、iscroll、fetch等组件实现模仿实现PC微信聊天，",
@@ -59,16 +64,30 @@ let initStates = {
 	        ]
 	    }
     ],
+    //当前会话
 	currentChat:{},
+	//当前会话人id
 	currentUserId:1,
+	//好友列表
 	id_list:[],
+	//筛选关键字。
 	filterKey:""
 };
+//当前会话
 let currentChat={};
+//如果多个会话，就放入这里面。
 let sessions= [];
-function chatIndex(state = initStates,action){
-	switch(action.type){
 
+/**
+ * 聊天入口,就是reducers的操作函数。，首先传入基本的state，state就是initStates。
+ * @param state
+ * @param action
+ * @returns
+ */
+function chatIndex(state = initStates,action){
+	//分别选择action的type。
+	switch(action.type){
+		//聊天登录的动作
 		case CHAT_LOGIN:
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
@@ -76,7 +95,7 @@ function chatIndex(state = initStates,action){
 			// console.log("SEARCH_RESULT = 17",initStates);
 			action.data.sessions.unshift(initStates.sessions[0]);
 			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
-
+			//聊天初始化的动作
 		case CHAT_INIT:
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
 			if(!_stores.get(Storage_Key)){
@@ -98,7 +117,7 @@ function chatIndex(state = initStates,action){
 			return Object.assign({},state,{
 				filterKey:action.data
 			});
-
+			//设置会话的动作。
 		case SET_SESSION:
 			
 			sessions = state.sessions.map((item)=>{
@@ -113,7 +132,7 @@ function chatIndex(state = initStates,action){
 				currentChat,
 				currentUserId:action.data
 			});
-
+			//发送消息的动作。
 		case SEND_MESSAGE: //发送消息
 			// console.log("SEND_MESSAGE",action.data);
 			
@@ -156,7 +175,7 @@ function chatIndex(state = initStates,action){
 				sessions:sessions,
 				currentChat:currentChat
 			});
-		//	送客
+		//	关闭会话的动作。也就是退出。
 		case SET_DESTROY: 
 			let _sessions = state.sessions.filter((item)=>item.id !== state.currentUserId);
 			// (sessions.filter((item)=>item.id==state.currentUserId)[0])

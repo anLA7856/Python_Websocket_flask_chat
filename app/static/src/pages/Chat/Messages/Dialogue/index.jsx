@@ -1,7 +1,7 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-24
+ * @description：
  */
 
 import React, { Component, PropTypes } from 'react';

@@ -22,35 +22,14 @@ let chat =  {
 		}
 	},
 	chatLogin:(options)=>{
-
 		return (dispatch)=>{
 			const {data,success,error}=options;
-			/*ajaxJson({
-				type:"POST",
-				url:"/initSession",
-				data:data,
-				success:(req)=>{
-					console.log(req)
-					if(req.res == 10000){
-						let {data}= req;
-						dispatch({
-							type:CHAT_LOGIN,
-							data
-						});
-					}else{
-						console.log(req.errorMsg)
-					};
-					success&&success(req);
-				},error:()=>{
-					error&&error();
-				}
-			});
-			return ;*/
 			fetchJson({
 				type:"POST",
 				url:"/initSession",
 				data:data,
 				success:req=>{
+					debugger;
 					console.log(req)
 					if(req.res == 10000){
 						_store.set(Storage_Key,data.username,120);

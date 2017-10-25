@@ -1,5 +1,9 @@
-
-
+/*
+ * @authors :anLA7856
+ * @date    :2017-10-25
+ * @description :storm 用来存储数据的地方。
+ * ajaxjson的方法。
+ */
 export const ajaxJson = (options) => {
 
   options.url ="https://easy-mock.com/mock/59294d8e91470c0ac1fe8a4c/staff"+options.url;
@@ -11,12 +15,15 @@ export const ajaxJson = (options) => {
     url,
     data,
     success:(resData)=>{
+    	//成功调用
       resHandler(resData,options)
     },
     error:(error,status)=>{
+    	//失败调用
       errorHandler(error,options,status)
     },
   }
+  //调用jquery的ajax方法。
   $.ajax(opts);
 }
 

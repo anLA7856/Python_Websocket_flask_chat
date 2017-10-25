@@ -1,12 +1,19 @@
-
+/*
+ * @authors :anLA7856
+ * @date    :2017-10-25
+ * @description :storm 用来存储数据的地方。
+ */
+/**
+ * storage方法。
+ */
 class storage {
-
   constructor(props) {
     this.props = props || {}
     this.source = this.props.source || window.localStorage
   }
 
   get(key) {
+	  //取得data数据和过期时间。
     const data = this.source,
           timeout = data[`${key}__expires__`]
 
@@ -15,7 +22,7 @@ class storage {
       this.remove(key)
       return;
     }
-
+    //如果value和data[key]相等，那么久把他用json解码。
     const value = data[key]
                 ? JSON.parse(data[key])
                 : data[key]
@@ -32,6 +39,7 @@ class storage {
     return value
   }
 
+  //删除key
   remove(key) {
     let data = this.source,
         value = data[key]
