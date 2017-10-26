@@ -1,7 +1,7 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-26
+ * @description：用于用户列表的组件。
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -18,7 +18,7 @@ import './Index.scss';
 
 
 
-
+//集成父页面传来的props，这样就可以依次乡下传递
 class List extends Component{
 	constructor(props){
 		super(props);
@@ -27,12 +27,15 @@ class List extends Component{
     	this.state = {
     	};
 	}
+	//第一次加载完之后，获得message，也就是获得信息。
 	componentDidMount(){
 		this.getMessage();
 	}
+	//组件将要被清除的时候，就清除自己的所有。
 	componentWillUnmount(){
 		clearInterval(this.time);
 	}
+	//去除数组，前num的数组。
 	Random(num){
 		let {_id_list} = this.props;
 		let arr = _id_list.concat([]);
@@ -54,6 +57,7 @@ class List extends Component{
 	    }
 	    return return_array;
 	}
+	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。
 	getMessage(){
 		this.time = setInterval(()=>{
 			let {ACTIONS,_user} = this.props;
@@ -76,6 +80,7 @@ class List extends Component{
 		
 		// console.log(y)
 	}
+	//使用setsession，来切换不同的会话。
 	render(){
 		let {_filterKey,_sessions,_currentId,_currentChat,ACTIONS} = this.props;
 		return ( 
@@ -103,11 +108,11 @@ class List extends Component{
 					</Scroll>
 				</div>
 			    <div className="logout">
-			    	<a className="ic" target="_bank" href="https://github.com/meibin08/react-redux-chat">
+			    	<a className="ic" target="_bank" href="https://github.com/anLA7856/Python_Websocket_flask_chat">
 			    		<Svg />
 			    		<p className="msg">如果该示例帮助了你，记得去github上帮我点颗星哦</p>
 			    	</a>
-			    	<a className="ic qq"  target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d44baf17512787eb0e4f268849a3239d6b9675145a606e21b9a055176bd1c0e2">
+			    	<a className="ic qq"  target="_blank" href="#">
 			    		<Svg hash="#svg-qq" />
 			    		<p className="msg">您在使用的过程中，有不懂的疑问或者bug可以加QQ群，一起交流哦</p>
 			    	</a>
@@ -121,6 +126,7 @@ class List extends Component{
 	}
 };
 
+//让react和redux关联起来。
 let mapStateToProps=(state)=>{
 	let {sessions,user,id_list,filterKey,currentChat,currentUserId} = state.chatIndex;
 	return {

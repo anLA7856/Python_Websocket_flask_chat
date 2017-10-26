@@ -1,7 +1,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-24
- * @description：
+ * @description：消息，是放在scroll里面的。代表着发送的一条消息。，仅仅代表消息列表。
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -25,12 +25,15 @@ class Messages extends Component{
     		z:1
     	};
 	}
+	//第一次加载进入。
 	componentDidMount(){
 		//dia(this);
 	}
+	//去到哪一个消息。
 	_goTo(y){
 		console.log(y)
 	}
+	//事件，比如几分几秒几年。
 	time(date,prevDate){
 		// console.log(date,prevDate)
 		let Interval  = 2*60*1000;//区间
@@ -42,14 +45,17 @@ class Messages extends Component{
 		};
 		return "";
 	}
+	//超链接是返回怎样的属性。
 	link (str){
 		var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/ig
 		return str.replace(reg,'<a className="link" target="_bank" href="$1$2">$1$2</a>')
 	}
+	//render方法。
 	render(){
 		let {_user,_currentChat} = this.props;
 		return ( 
-			
+		        /*message-w代表整个聊天框
+		         * */
 			<section className="message-w">
 				<header className="group-name">
 					<h3>{_currentChat.user.name}</h3>
@@ -59,6 +65,7 @@ class Messages extends Component{
 				        <ul>
 				            <li className="first" ><span className="history">查看更多历史消息</span></li>
 				            {
+				                //把message的这个array用map的方式遍历一遍。
 			            	_currentChat.messages.map((item,i)=>{
 			            		return (
 			            			<li key={i}>
@@ -100,7 +107,7 @@ class Messages extends Component{
 		);
 	}
 };
-
+//传递进来state来初始化三个。
 let mapStateToProps=(state)=>{
 	let {sessions,user,currentChat} = state.chatIndex;
 	return {
@@ -110,10 +117,12 @@ let mapStateToProps=(state)=>{
 	};
 }; 
 
+ //绑定action
 let mapDispatchToProps=(dispatch)=>{
 	return {
 		ACTIONS:bindActionCreators(actions,dispatch)
 	};
 };
+//用于和redux之间的连接。
 export default connect(mapStateToProps,mapDispatchToProps)(Messages);
 

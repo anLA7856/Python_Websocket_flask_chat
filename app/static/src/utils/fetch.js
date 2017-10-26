@@ -1,7 +1,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
- * @description :storm 用来存储数据的地方。
+ * @description :进行真正异步传输的地方。
  */
 
 import promise from 'es6-promise'

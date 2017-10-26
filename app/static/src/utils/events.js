@@ -3,8 +3,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
- * @description :storm 用来存储数据的地方。
-      打开于关闭。页面组件方法。
+ * @description :storm 用于在给scroll这个组件提供时间方法。
  */
 module.exports = {
   on: function (el, type, callback) {

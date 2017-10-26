@@ -1,3 +1,4 @@
+//用于运行。
 var webpack = require('webpack');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -19,9 +20,7 @@ var config = {
   },
   
   plugins: [
-	// new ExtractTextPlugin('[name].css', {
-	//   allChunks: true
-	// }),
+	 //wendors来优化。
 	new webpack.optimize.CommonsChunkPlugin({
 	  name: 'vendors'
 	}),

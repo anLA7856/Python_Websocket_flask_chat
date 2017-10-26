@@ -1,7 +1,7 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-26
+ * @description：聊天界面的左边，把联系人放到里面。
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -14,30 +14,28 @@ import List from '../List';
 
 import './Index.scss';
 
-
-
-
 class Sidebar extends Component{
+    //构造函数，从父页面得到属性。
 	constructor(props){
 		super(props);
-
     	this.state = {
-    		
-    		
+
     	};
 	}
+	//第一次加载后。需要做的。
 	componentDidMount(){
 		//dia(this);
-
 	}
+	//搜索框的功能
 	search(e){
 		let {value}=e.target;
 		let {ACTIONS} = this.props;
 		ACTIONS.filter_search(value);
 	}
+	//渲染方法。
 	render(){
 		let {_user} = this.props;
-		return ( 
+		return (
 			<section className="sidebar">
 				<div className="card">
 				    <header className="user">
@@ -54,6 +52,7 @@ class Sidebar extends Component{
 	}
 };
 
+//react和redux相互绑定。
 let mapStateToProps=(state)=>{
 	let {user,filterKey} = state.chatIndex;
 	return {

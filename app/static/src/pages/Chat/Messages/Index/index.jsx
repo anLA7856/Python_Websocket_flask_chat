@@ -1,7 +1,9 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-24
+ * @description：
+ * 这个组件是dialogue外面的一层。也就是用来装配Dialogue和Send的外面的一层
+ * 
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -21,14 +23,11 @@ import './Index.scss';
 class Messages extends Component{
 	constructor(props){
 		super(props);
-
     	this.state = {
-    		
     	};
 	}
 	componentDidMount(){
 		//dia(this);
-
 	}
 	
 	render(){
@@ -39,6 +38,7 @@ class Messages extends Component{
 				<div className="dialogue-tips">请选择要对话的用户</div>
 			);
 		};
+		//把一个dialog和send套在这这里面。
 		return ( 
 			<div className="chat-main">
 				<Dialogue />
@@ -48,6 +48,7 @@ class Messages extends Component{
 	}
 };
 
+//因为这个系统是提供跟不同人私聊的，所以，这个index也有以下和redux进行交互的功能。
 let mapStateToProps=(state)=>{
 	let {sessions,user,currentChat,currentUserId} = state.chatIndex;
 	return {
