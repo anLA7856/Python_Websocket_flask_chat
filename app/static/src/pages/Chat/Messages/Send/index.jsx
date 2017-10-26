@@ -1,7 +1,7 @@
 /*
- * @authors :Bin Mei
- * @date    :2017-05-22
- * @description：react-redux-chat  -> 仿微信聊天工具
+ * @authors :anLA7856
+ * @date    :2017-10-25
+ * @description：聊天列表下面的输入框。
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -27,10 +27,11 @@ class Messages extends Component{
     		tips:false
     	};
 	}
+	//第一次加载完成之后。
 	componentDidMount(){
 		dia(this);
-
 	}
+	//输入内容为null的提示。
 	isTisp(){
         clearTimeout(this.time);
         this.open("tips");
@@ -49,20 +50,24 @@ class Messages extends Component{
 		});
 
 	}
+	//过滤非法字符。
 	filter(str){
 		return str(/[|`|~|#|$|^|{|}|\\|[\\]|<|>|~#|——|{|}|【|】]/)
 	}
+	//验证字符串，
 	validate(e){
 		let {content} = this.state;
 		if(( content.trim().length <= 0) ){
             this.setState({content:content.trim()});
             e.target.value=content.trim();
+            //为null就显示提示。
             this.isTisp();
             return false;
         };
         return true;
 
 	}
+	//发送消息，ACTION就是个大集合卧槽
 	save(){
 		let {ACTIONS,_user,_currentId} = this.props;
 		let {content} = this.state;
@@ -70,6 +75,7 @@ class Messages extends Component{
 			return false;
 		};
 		this.flag = true;
+		//成功传入一个回调函数，失败传入一个回调函数。
 		ACTIONS.send_message({
 			user:_user,id:_currentId,content:content,
 			success:(req)=>{
@@ -79,12 +85,14 @@ class Messages extends Component{
 				this.flag = false;
 			}
 		});
+		//把内容设置为null，并且把textarea也设为null。
 		this.setState({
 			content:""
 		},()=>{
 			this.refs.textarea.value ="";
 		});
 	}
+	//按住回车，直接发送。
 	enter(e){
 		let {ACTIONS,_user,_currentId} = this.props;
 		let {name,value}= e.target;	
@@ -115,6 +123,7 @@ class Messages extends Component{
 			this.save();
 		};
 	}
+	//销毁。
 	destroy(){
 		let {ACTIONS,_user,_currentId} = this.props;
 		if(_currentId == 1){
@@ -124,6 +133,7 @@ class Messages extends Component{
 			user:_user,id:_currentId
 		});
 	}
+	//渲染的函数。就是一个套间。class=send的套间。
 	render(){
 		let {tips,content}=this.state;
 		return ( 
@@ -138,7 +148,7 @@ class Messages extends Component{
 		);
 	}
 };
-
+//下面就是把react和redux绑定起来的几个方法。
 let mapStateToProps=(state)=>{
 	let {sessions,user,currentUserId} = state.chatIndex;
 	return {

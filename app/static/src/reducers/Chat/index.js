@@ -2,6 +2,9 @@
  * @authors :anLA7856
  * @date    :2017-10-25
  * @description：纯计算函数，用于计算store
+ * 整合不同的actions，做改变不同的state。
+ * 首先是初始化一些数据，然后就是计算state，并返回一个state。
+ * state变化会导致重新渲染ui。
  */
 
 import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT} from "src/constants/Chat";
@@ -48,7 +51,7 @@ let initStates = {
 	                self: 0
 	            },
 	            {
-	                content:"项目地址：https://github.com/meibin08/react-redux-chat",
+	                content:"项目地址：https://github.com/anLA7856/Python_Websocket_flask_chat",
 	                date: Date.now(),
 	                self: 1
 	            },{
@@ -57,7 +60,7 @@ let initStates = {
 	                self: 0
 	            },
 	            {
-	                content:"QQ技术交流群：386485473",
+	                content:"QQ技术交流群：**",
 	                date: Date.now(),
 	                self: 1
 	            }
@@ -79,6 +82,7 @@ let currentChat={};
 let sessions= [];
 
 /**
+ * 分割action。
  * 聊天入口,就是reducers的操作函数。，首先传入基本的state，state就是initStates。
  * @param state
  * @param action
@@ -89,11 +93,13 @@ function chatIndex(state = initStates,action){
 	switch(action.type){
 		//聊天登录的动作
 		case CHAT_LOGIN:
+			//里面有，就说明已经登录了的情况，所以直接返回咯。
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
 			});
-			// console.log("SEARCH_RESULT = 17",initStates);
+			// 获取当前默认名字。
 			action.data.sessions.unshift(initStates.sessions[0]);
+			//重新构造一个包含原state的属性返回。
 			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
 			//聊天初始化的动作
 		case CHAT_INIT:

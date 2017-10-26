@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames';
 
+/**
+ * svg图片格式专用类。
+ */
 class Svg extends Component {
 
   constructor(props) {

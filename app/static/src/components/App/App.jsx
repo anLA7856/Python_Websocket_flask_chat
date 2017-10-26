@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import './App.scss';
 /**
  * 公共父类。app，里面放他的儿子集合。
+ * 这是Index外面放的一层封装的组件，div下面放所有他的儿子的集合。
  */
 class Index extends Component {
   render() {

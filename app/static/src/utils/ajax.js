@@ -1,7 +1,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
- * @description :storm 用来存储数据的地方。
+ * @description :
  * ajaxjson的方法。
  */
 export const ajaxJson = (options) => {

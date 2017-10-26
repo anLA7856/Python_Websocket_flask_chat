@@ -1,7 +1,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
- * @description：显示。
+ * @description：Login和，Messages，Sidebar的父类，用于整合着三个子组件。
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -26,20 +26,19 @@ class wechat extends Component {
 
         this.state = {
 
-
         };
     }
+    //初始头一次加载，
     componentDidMount() {
         //dia(this);
         let { ACTIONS } = this.props;
         ACTIONS.chat_init();
-
-
     }
-
+    //获取组件属性。
     render() {
         let { _sessions, _user } = this.props;
-        //获取当前状态，然后更改。
+        //获取当前状态，然后更改。判断是否有值，
+        //没有值的话，就说明处于登录状态，所以就是login组件
         return (
             <div>
                 {_sessions.length > 0 && Object.keys( _user ).length > 0 ? (
@@ -57,6 +56,7 @@ class wechat extends Component {
     }
 };
 
+//绑定react和redux。
 let mapStateToProps = ( state ) => {
     let { sessions, user } = state.chatIndex;
     return {

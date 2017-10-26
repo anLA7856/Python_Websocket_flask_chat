@@ -2,13 +2,13 @@
  * @authors :anLA7856
  * @date    :2017-10-24
  * @description：python聊天工具
- * 这个是登录界面，先更改。
+ * 这个是登录框，先更改。
  */
 
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import classnames from 'classnames';
+import classnames from 'classnames';             //就是类名。
 import actions from "src/actions";
 import Sidebar from "../Sidebar/Index";
 import Messages from "../Messages/Index";
@@ -21,7 +21,7 @@ import './Index.scss';
 
 class Login extends Component {
     constructor( props ) {
-        debugger;
+      //  debugger;
         super( props );
         //自定义set和state
         this.flag = false;
@@ -37,7 +37,7 @@ class Login extends Component {
             [`${name}`]: value
         } );
     }
-    //提交表单的方法，获取从父类传来的props作为actions。
+    //提交表单的方法，获取从父类传来的props作为actions。不同于ACTION
     submit() {
 
         let { ACTIONS } = this.props;
@@ -95,7 +95,7 @@ class Login extends Component {
         );
     }
 };
-
+//整体布局，通过props来改变，所以先传入state，用state来更改props
 let mapStateToProps = ( state ) => {
     let { sessions, user } = state.chatIndex;
     return {
@@ -103,11 +103,15 @@ let mapStateToProps = ( state ) => {
         _user: user
     };
 };
-
+//绑定dispatch和actions。把action和dispatch连接起来。
+//react和redux连接。渲染，一旦发生变化，就又重新渲染。变化内容是actions里面的，通过dispatch来辨别。
+//绑定dispatch。
+//在组件里面的。
 let mapDispatchToProps = ( dispatch ) => {
     return {
         ACTIONS: bindActionCreators( actions, dispatch )
     };
 };
+//login这个组件。连接，把react和redux连接。
 export default connect( mapStateToProps, mapDispatchToProps )( Login );
 
