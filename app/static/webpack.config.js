@@ -58,6 +58,7 @@ var config = {
 };
 
 if (process.env.NODE_ENV === 'development') {
+	//生成源代码映射。
 	config.devtool = 'eval-source-map';
 	config.module.loaders.push({
 	  test: /\.(js|jsx)$/,
