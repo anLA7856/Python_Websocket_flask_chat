@@ -39,7 +39,6 @@ class Login extends Component {
     }
     //提交表单的方法，获取从父类传来的props作为actions。不同于ACTION
     submit() {
-
         let { ACTIONS } = this.props;
         //从state里面获取name和password
         let { password } = this.state;

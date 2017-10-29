@@ -43,7 +43,8 @@ let chat =  {
 			const {data,success,error}=options;
 			fetchJson({
 				type:"POST",
-				url:"/initSession",
+				//url:"/initSession",
+				url:"/user/add",
 				data:data,
 				success:req=>{
 					console.log(req)
