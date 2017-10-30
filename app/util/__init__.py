@@ -68,9 +68,13 @@ def getRoomInfoByRoomNum(roomNum):
 
 
         
+def outputJson(message):
+    json_json = json.dumps({
+        'message': message
+    })
+    return json_json
         
-        
-        
+
         
         
         

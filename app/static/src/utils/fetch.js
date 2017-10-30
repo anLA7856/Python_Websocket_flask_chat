@@ -12,7 +12,7 @@ promise.polyfill();
 
 // fetchjson的方法，通过请求url的方式。
 export const fetchJson = (options) => {
-	debugger;
+	//debugger;
 //options.url ="https://easy-mock.com/mock/59294d8e91470c0ac1fe8a4c/staff"+options.url;
 	options.url ="http://localhost:5000/api/v1.0"+options.url
 	//从传入的option里面获得一些数据。
@@ -23,18 +23,19 @@ export const fetchJson = (options) => {
     // credentials: 'include',// 日志上报的，需求注释这一行
     headers: {
     	//特定头。
-      'X-Avoscloud-Application-Id': 'toi4KhzlzSCXvIzkI9FHIEt5-gzGzoHsz',
-      'X-Avoscloud-Application-Key':'5NNtepVs7mF6R8U8TPjImffo',
+    //  'X-Avoscloud-Application-Id': 'toi4KhzlzSCXvIzkI9FHIEt5-gzGzoHsz',
+   //   'X-Avoscloud-Application-Key':'5NNtepVs7mF6R8U8TPjImffo',
+   //   'password':data.password,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
   }
-
   if (['POST', 'PUT'].indexOf(opts.method.toUpperCase()) >= 0) {
 	  //把data转化为string传过去
     opts.body = JSON.stringify(data)
   }
-
+	var t = opts;
+	  debugger;
 	//开始拿。
   fetch(url, opts)
     .then(resData => toJson(resData, opts))
@@ -66,6 +67,7 @@ function toJson(resp, options) {
   if (resp.status >= 400) {
     return errorHandler(null, options, resp.status)
   }
+  debugger;
   return resp.json()
 }
 
