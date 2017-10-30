@@ -16,7 +16,8 @@ def getLoginInData(myredis,username):
     returnJson.user = getUserByUsername(username)
     returnJson.sessions = getSessionsByRoomNum(myredis, roomNum)
     returnJson.message = 'ok'
-    return returnJson.to_json()
+    tes = returnJson.to_json()
+    return tes
     
 #下周一来写这里，此时这种方法能不能返回正确json，因为我是用面向对象思想写的。
 def getRoomNumByUsername(myredis,username):
@@ -33,13 +34,19 @@ def getUserByUsername(username):
     strsss = ownuser.to_json()
     return strsss
 
+#虽然设定是单人的方式但是打算搞成多人的方式，供扩展。由于是根据roomnum得的，所以最终只能有一个session返回。
 def getSessionsByRoomNum(myredis,roomNum):
-    sessions = Sessions()
-    sessions.id = current_milli_time()
-    sessions.user = getRoomInfoByRoomNum(roomNum)
-    sessions.messages = getChatDataByRoomNum(myredis,roomNum)
-    stre = sessions.to_json()
-    return stre
+    sessions = []
+    #这里里面就只放一个
+    session = Sessions()
+    session.id = current_milli_time()
+    session.user = getRoomInfoByRoomNum(roomNum)
+    session.messages = getChatDataByRoomNum(myredis,roomNum)
+    
+    sessions.append(session)
+    
+    s = json.dumps(sessions)
+    return s
 
 def getChatDataByRoomNum(myredis,roomNum):
         #先从某个list里面取得所有数据。

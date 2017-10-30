@@ -35,7 +35,7 @@ export const fetchJson = (options) => {
     opts.body = JSON.stringify(data)
   }
 	var t = opts;
-	  debugger;
+	//  debugger;
 	//开始拿。
   fetch(url, opts)
     .then(resData => toJson(resData, opts))

@@ -16,10 +16,10 @@ def joinChat():
     #每一个连接，都返回给一个redis连接。
     myRedis = redis.Redis(connection_pool=pool)
     #request方法获得
-    #username = request.args.get('password')
+    username = request.args.get('password')
     #获取传入的原始数据，也就是请求中的body数据。
     data = request.data
-    username=json.loads(data)['password']
+    #username=json.loads(data)['password']
   #  use2 = request.data['password']
     #前段判断过为null加了，所以不用判断了。
     if username is None:

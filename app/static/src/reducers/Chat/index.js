@@ -89,6 +89,7 @@ let sessions= [];
  * @returns
  */
 function chatIndex(state = initStates,action){
+	//debugger;
 	//分别选择action的type。
 	switch(action.type){
 		//聊天登录的动作
