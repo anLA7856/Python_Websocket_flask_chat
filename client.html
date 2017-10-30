@@ -30,12 +30,12 @@
             var host = "ws://" + $("serverIP").value + ":" + $("serverPort").value + "/"
             socket = new WebSocket(host);
             try {
-
+            	//连接成功的监听时间
                 socket.onopen = function (msg) {
                     $("btnConnect").disabled = true;
                     alert("连接成功！");
                 };
-
+				//收到消息的监听时间
                 socket.onmessage = function (msg) {
                     if (typeof msg.data == "string") {
                         displayContent(msg.data);
@@ -44,19 +44,19 @@
                         alert("非文本消息");
                     }
                 };
-
+				//关闭socket的时间。
                 socket.onclose = function (msg) { alert("socket closed!") };
             }
             catch (ex) {
                 log(ex);
             }
         }
-
+		//发送消息
         function send() {
             var msg = $("sendText").value
             socket.send(msg);
         }
-
+		//关闭socket
         window.onbeforeunload = function () {
             try {
                 socket.close();
@@ -65,10 +65,11 @@
             catch (ex) {
             }
         };
-
+		//模拟jquery获取id选择器
         function $(id) { return document.getElementById(id); }
 
-        Date.prototype.Format = function (fmt) { //author: meizz 
+        //自定义日期类型。
+        Date.prototype.Format = function (fmt) { 
             var o = {
                 "M+": this.getMonth() + 1, //月份 
                 "d+": this.getDate(), //日 
@@ -83,7 +84,7 @@
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
         }
-
+		//展示消息到txtContent中
         function displayContent(msg) {
             $("txtContent").value += "\r\n" +new Date().Format("yyyy/MM/dd hh:mm:ss")+ ":  " + msg;
         }
