@@ -121,6 +121,7 @@ function chatIndex(state = initStates,action){
 			
 			sessions = state.sessions.map((item)=>{
 				if(item.id==state.currentUserId){
+					//直接往后面加
 					item.messages=item.messages.concat(action.data);
 					currentChat= item;
 				};
@@ -133,31 +134,34 @@ function chatIndex(state = initStates,action){
 			});
 		//接收消息  
 		case RECEIVE_MESSAGE: 
-			// console.log("SEND_MESSAGE",action.data);
+			//如果长度为0，不渲染，直接跳过。
 			if(action.data.length <= 0){
 				return state;
 			};
-			for(let key in action.data){
-				console.log(action.data[key])
-				let {id} = action.data[key];
-				sessions = state.sessions.map((item)=>{
-
-					if(item.id == id && item.id != state.currentUserId){
-						item.status = true;
-						item.messages=item.messages.concat(action.data[key].messages);
-						
-					};
-					if(item.id==state.currentUserId){
-						currentChat= item;
-					};
-					return item;
-				});
-			};
+			//还是在initState上面做文章，这里要注意后台返回的数据格式啦，直接返回一个message的格式json串。
+			initStates.sessions[0].messages.unshift(action.data.messages);
+//			for(let key in action.data){
+//				console.log(action.data[key])
+//				let {id} = action.data[key];
+//				sessions = state.sessions.map((item)=>{
+//
+//					if(item.id == id && item.id != state.currentUserId){
+//						item.status = true;
+//						item.messages=item.messages.concat(action.data[key].messages);
+//						
+//					};
+//					if(item.id==state.currentUserId){
+//						currentChat= item;
+//					};
+//					return item;
+//				});
+//			};
 			// (sessions.filter((item)=>item.id==state.currentUserId)[0])
-			return Object.assign({},state,{
-				sessions:sessions,
-				currentChat:currentChat
-			});
+			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
+//			return Object.assign({},state,{
+//				sessions:sessions,
+//				currentChat:currentChat
+//			});
 		//	关闭会话的动作。也就是退出。
 		case SET_DESTROY: 
 			let _sessions = state.sessions.filter((item)=>item.id !== state.currentUserId);

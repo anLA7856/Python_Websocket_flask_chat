@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import *
 from config import config
 import redis
-from _chat import websocket_server
+from ._chat import websocket_server
 
 
 pool = redis.ConnectionPool(host='127.0.0.1', port=6379)
