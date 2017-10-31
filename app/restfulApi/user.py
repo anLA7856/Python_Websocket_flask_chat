@@ -8,6 +8,8 @@ from .. import pool
 from twisted.conch.test.test_insults import methods
 from ..util import *
 import json
+import random
+import string
 #from ..util import getLoginInData,outputJson
 
 #用于最开始，新加入用户。这个是加入私聊，也就是新开房间的聊天
@@ -31,10 +33,16 @@ def joinChat():
     if myRedis.sismember('users', username):
         return outputJson('该用户名已经存在，请重新输入！,username aready existed')
     else:
-        myRedis.sadd('users', username)
+        mydata = {
+            'picName':str(random.randint(1, 4))+'.jpeg',
+            'location':'/pic/',
+            'name':username
+            } 
+        myRedis.sadd('users', mydata)
+        
         #strre = getUserByUsername(username)
         #return strre
-        strre = getLoginInData(myRedis,username)
+        strre = getLoginInData(myRedis,mydata)
         print(strre)
         return strre
 

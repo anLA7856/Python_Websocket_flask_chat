@@ -7,13 +7,13 @@ import time
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 #初始登录，得到初始化json，也一般是进入大厅得到未来24小时会话。
-def getLoginInData(myredis,username):
+def getLoginInData(myredis,mydata):
     #需要从大厅取数据。，这里默认大厅的聊天代号为:room_000，其他房间为unix时间戳。
     #获得某个房间的所有存在于系统的所有聊天记录，这里默认
     roomNum = 'room_000'
     returnJson = ReturnJson()
     returnJson.res = 10000
-    returnJson.user = getUserByUsername(username)
+    returnJson.user = getUserByUsername(mydata)
     returnJson.sessions = getSessionsByRoomNum(myredis, roomNum)
     returnJson.message = 'ok'
     tes = returnJson.to_json()
@@ -27,17 +27,17 @@ def getRoomNumByUsername(myredis,username):
     myredis.set(username,name)
     return name
 
-def getUserByUsername(username):
+def getUserByUsername(mydata):
     ownuser = Ownuser()
-    ownuser.createOwnuser('default.jpg',username,username)
-    ownuser.img = '/pic/1.jpeg'
+    ownuser.createOwnuser('default.jpg',mydata['name'],['name'])
+    ownuser.img = mydata['location']+mydata['picName']
     strsss = ownuser.to_json()
     return strsss
 
 #虽然设定是单人的方式但是打算搞成多人的方式，供扩展。由于是根据roomnum得的，所以最终只能有一个session返回。
 def getSessionsByRoomNum(myredis,roomNum):
     sessions = []
-    #这里里面就只放一个
+    #这里里面就只放一个,就只是大厅的
     session = Sessions()
     session.id = current_milli_time()
     session.user = getRoomInfoByRoomNum(roomNum)
@@ -74,7 +74,7 @@ def getRoomInfoByRoomNum(roomNum):
     return user.to_json()
 
 
-        
+
 def outputJson(message):
     json_json = json.dumps({
         'message': message
@@ -82,8 +82,9 @@ def outputJson(message):
     return json_json
         
 
-        
-        
+
+
+
         
         
         
