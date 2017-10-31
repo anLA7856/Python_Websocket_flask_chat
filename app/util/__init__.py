@@ -30,7 +30,7 @@ def getRoomNumByUsername(myredis,username):
 def getUserByUsername(username):
     ownuser = Ownuser()
     ownuser.createOwnuser('default.jpg',username,username)
-    ownuser.img = '123.jpg'
+    ownuser.img = '/pic/1.jpeg'
     strsss = ownuser.to_json()
     return strsss
 
@@ -42,11 +42,10 @@ def getSessionsByRoomNum(myredis,roomNum):
     session.id = current_milli_time()
     session.user = getRoomInfoByRoomNum(roomNum)
     session.messages = getChatDataByRoomNum(myredis,roomNum)
-    
-    sessions.append(session)
-    
-    s = json.dumps(sessions)
-    return s
+    temp = session.to_json()
+    sessions.append(temp)
+
+    return sessions
 
 def getChatDataByRoomNum(myredis,roomNum):
         #先从某个list里面取得所有数据。
@@ -60,7 +59,8 @@ def getChatDataByRoomNum(myredis,roomNum):
         message.content = jsonDate['content']
         message.date = jsonDate['date']
         message.self = jsonDate['self']
-        messages.append(message)
+        temp = message.to_json()
+        messages.append(temp)
         
     return messages
         

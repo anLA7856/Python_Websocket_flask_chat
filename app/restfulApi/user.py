@@ -18,22 +18,24 @@ def joinChat():
     #request方法获得
     username = request.args.get('password')
     #获取传入的原始数据，也就是请求中的body数据。
-    data = request.data
-    #username=json.loads(data)['password']
+    if(username is None):
+        data = request.data
+        username=json.loads(data)['password']
   #  use2 = request.data['password']
     #前段判断过为null加了，所以不用判断了。
     if username is None:
-        return outputJson('请输入合法用户名')
+        return outputJson('请输入合法用户名,please input username')
         #username = '1232'
     #判断redis里面的users是否存在
     #开始在编写测试的时候，把string里面一个也命名为users，总报错说key有问题，用del users删了就没事了
     if myRedis.sismember('users', username):
-        return outputJson('该用户名已经存在，请重新输入！')
+        return outputJson('该用户名已经存在，请重新输入！,username aready existed')
     else:
         myRedis.sadd('users', username)
         #strre = getUserByUsername(username)
         #return strre
         strre = getLoginInData(myRedis,username)
+        print(strre)
         return strre
 
 
