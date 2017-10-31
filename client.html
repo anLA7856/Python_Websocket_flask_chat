@@ -27,7 +27,7 @@
         var socket;
 
         function connect() {
-            var host = "ws://" + $("serverIP").value + ":" + $("serverPort").value + "/"
+            var host = "ws://" + $("serverIP").value + ":" + $("serverPort").value;
             socket = new WebSocket(host);
             try {
             	//连接成功的监听时间

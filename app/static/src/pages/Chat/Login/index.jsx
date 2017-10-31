@@ -108,6 +108,7 @@ let mapStateToProps = ( state ) => {
 //在组件里面的。
 let mapDispatchToProps = ( dispatch ) => {
     return {
+        //把整个actions都给这个组件。
         ACTIONS: bindActionCreators( actions, dispatch )
     };
 };

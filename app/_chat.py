@@ -31,11 +31,12 @@ class websocket_thread(threading.Thread):
         #利用sec-websocket-key加密后返回一个token。
         token = self.generate_token(headers['Sec-WebSocket-Key'])
         #己方发送，然后类似于认证连接
+        #下列数据不能空三个格子。这是返回头，只有这样的头，客户端才会认为成功。
         self.connection.send('\
-            HTTP/1.1 101 WebSocket Protocol Hybi-10\r\n\
-            Upgrade: WebSocket\r\n\
-            Connection: Upgrade\r\n\
-            Sec-WebSocket-Accept: %s\r\n\r\n' % token)
+HTTP/1.1 101 WebSocket Protocol Hybi-10\r\n\
+Upgrade: WebSocket\r\n\
+Connection: Upgrade\r\n\
+Sec-WebSocket-Accept: %s\r\n\r\n' % token)
         #死循环，所以客户端就可以一直发送了。
         while True:
             #无限循环，无限循环接受
@@ -53,7 +54,7 @@ class websocket_thread(threading.Thread):
             #每个发一份，不过在redis里面只需要存一份，因为只有一个公共聊天室
             notify(message)
     
-    #简单的数据加密。
+    #简单的数据加密。因为msg穿过来的数据是乱码的。
     def parse_data(self, msg):
         v = ord(msg[1]) & 0x7f
         if v == 0x7e:
@@ -111,6 +112,6 @@ class websocket_server(threading.Thread):
             except socket.timeout:
                 print 'websocket connection timeout!'
 
-if __name__ == '__main__':
-    server = websocket_server(9000)
-    server.start()
+#if __name__ == '__main__':
+#    server = websocket_server(9000)
+#    server.start()

@@ -7,9 +7,11 @@ import time
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 #初始登录，得到初始化json，也一般是进入大厅得到未来24小时会话。
+
 def getLoginInData(myredis,mydata):
     #需要从大厅取数据。，这里默认大厅的聊天代号为:room_000，其他房间为unix时间戳。
     #获得某个房间的所有存在于系统的所有聊天记录，这里默认
+    #只能进入公共聊天室算了，不能进入私人聊天室，以后有机会实现。
     roomNum = 'room_000'
     returnJson = ReturnJson()
     returnJson.res = 10000

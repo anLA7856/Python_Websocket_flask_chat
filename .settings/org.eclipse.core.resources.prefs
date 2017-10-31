@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
 encoding//app/__init__.py=utf-8
+encoding//app/_chat.py=utf8
 encoding//app/models.py=utf-8
 encoding//app/restfulApi/user.py=utf-8
 encoding//app/util/__init__.py=utf-8
-encoding/_chat.py=utf8
 encoding/manage.py=utf-8

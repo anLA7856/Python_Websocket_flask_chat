@@ -57,8 +57,10 @@ class List extends Component{
 	    }
 	    return return_array;
 	}
-	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。
+	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。定时任务，8s刷新一次。
+	//所以我的集成后的，需要在这里面进行处理。
 	getMessage(){
+	    
 		this.time = setInterval(()=>{
 			let {ACTIONS,_user} = this.props;
 			let id_list = this.Random(3);
@@ -68,8 +70,8 @@ class List extends Component{
 			};
 			this.flag = true;
 			ACTIONS.receive_message({
-				id_list:id_list,
-				user:_user,
+//				id_list:id_list,
+//				user:_user,
 				success:req=>{
 					this.flag = false;
 				},error:err=>{

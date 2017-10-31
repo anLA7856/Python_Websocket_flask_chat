@@ -23,11 +23,13 @@ import {ajaxJson} from "src/utils/ajax";
 import {fetchJson} from "src/utils/fetch";
 import Storage from 'src/utils/storage';
 import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT} from "src/constants/Chat";
+import {getInstance} from 'src/utils/socket'  
 
 //定义一个_store对象。
 let _store = new Storage(),
 	Storage_Key = 'username';
 
+let socket;
 //定义聊天对象action。注意里面普通对象。
 let chat =  {
 		//初始化方法。
@@ -56,6 +58,8 @@ let chat =  {
 							type:CHAT_LOGIN,
 							data:req
 						});
+						//socket连接：
+						socket = getInstance();
 					}else{
 
 					};
@@ -87,62 +91,43 @@ let chat =  {
 	send_message:(options)=>{
 		return (dispatch)=>{
 			const {user,id,content,success,error}=options;
-			fetchJson({
-				type:"POST",
-				url:"/pushMessage?sid=" + user.sid,
-				data:{
-					'sid': user.sid,
-                    'id': id,
-                    'content':content
-				},
-				success:(req)=>{
-					if(req.res == 10000){
-						let {data}= req;
-						//数据格式。
-						data.unshift({
-							content:content,
-			                date: Date.now(),
-			                self: 1
-						});
-						dispatch({
-							type:SEND_MESSAGE,
-							data
-						});
-					}else{
-						console.log(req.errorMsg)
-					};
-					success&&success(req);
-				},error:()=>{
-					error&&error();
-				}
+			//设定为，一个人一次只能跟一种人聊天，即一次只能在一个房间聊天，除非不同浏览器，不同名字。
+			sendData={
+				'name': user.name,
+                'content':content
+			}
+			socket.send(sendData);
+			let data=[];
+			data.unshift({
+				content:content,
+                date: Date.now(),
+                self: 1
 			});
+			dispatch({
+				type:SEND_MESSAGE,
+				data
+			});
+			
+
 		};
 	},
 	//接收消息
 	receive_message:(options)=>{
 		return (dispatch)=>{
-			const {user,id_list,success,error}=options;
-			fetchJson({
-				type:"POST",
-				url:"/getMessage?sid=" + user.sid,
-				data:{
-					'id_list':id_list,
-				},
-				success:(req)=>{
-					if(req.res == 10000){
-						let {data}= req;
-						dispatch({
-							type:RECEIVE_MESSAGE,
-							data
-						});
-					}else{
-						console.log(req.errorMsg)
-					};
-					success&&success(req);
-				},error:()=>{
-					error&&error();
-				}
-			});
+			//注册监听事件。
+            socket.onmessage = function (msg) {
+                if (typeof msg.data == "string") {
+                    let {data}=msg.data;
+                    dispatch({
+						type:RECEIVE_MESSAGE,
+						data
+					});
+                }
+                else {
+                	console.log(req.errorMsg)
+                }
+            };
+
 		};
 	},
 	//送客
