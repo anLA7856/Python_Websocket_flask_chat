@@ -138,8 +138,19 @@ function chatIndex(state = initStates,action){
 			if(action.data.length <= 0){
 				return state;
 			};
+			//判断是谁的，
+			var temp = action.data.split('[~');
+			var tempSelf = false;
+			if(temp[2] == state.user.name){
+				tempSelf = true;
+			}
+			tempJson = {
+					"content": temp[1],
+                    "date": temp[2],
+                    "self": tempSelf
+			}
 			//还是在initState上面做文章，这里要注意后台返回的数据格式啦，直接返回一个message的格式json串。
-			initStates.sessions[0].messages.unshift(action.data.messages);
+			initStates.sessions[0].messages.unshift(tempJson);
 //			for(let key in action.data){
 //				console.log(action.data[key])
 //				let {id} = action.data[key];

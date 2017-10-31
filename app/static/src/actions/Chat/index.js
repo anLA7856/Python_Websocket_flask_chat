@@ -29,7 +29,7 @@ import {getInstance} from 'src/utils/socket'
 let _store = new Storage(),
 	Storage_Key = 'username';
 
-let socket;
+let socket = getInstance()
 //定义聊天对象action。注意里面普通对象。
 let chat =  {
 		//初始化方法。
@@ -59,7 +59,7 @@ let chat =  {
 							data:req
 						});
 						//socket连接：
-						socket = getInstance();
+						
 					}else{
 
 					};
@@ -92,11 +92,10 @@ let chat =  {
 		return (dispatch)=>{
 			const {user,id,content,success,error}=options;
 			//设定为，一个人一次只能跟一种人聊天，即一次只能在一个房间聊天，除非不同浏览器，不同名字。
-			sendData={
-				'name': user.name,
-                'content':content
-			}
+			debugger
+			var sendData=user.name+"[~"+content
 			socket.send(sendData);
+			//socket.send('asdf')
 			let data=[];
 			data.unshift({
 				content:content,
@@ -107,8 +106,6 @@ let chat =  {
 				type:SEND_MESSAGE,
 				data
 			});
-			
-
 		};
 	},
 	//接收消息

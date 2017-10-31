@@ -4,6 +4,9 @@ import threading
 import hashlib
 import socket
 import base64
+import time
+from .util import *
+
 
 global clients
 clients = {}
@@ -46,11 +49,23 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
                 print "unexpected error: ", e
                 clients.pop(self.username)
                 break
+            
+           # myData = json.loads(data)
+           # name = myData['name']
+           # content = myData['content']
+            date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+                
             data = self.parse_data(data)
             #如果发送内容大小为0,就不发送。
             if len(data) == 0:
                 continue
-            message = self.username + ": " + data
+            name = data.split('[~')[0]
+            content = data.split('[~')[1]
+            
+            #原路返回，记得客户端分析。
+            message = data+'[~'+date;
+            ##在这里存入大厅的redis缓存中
+            storeUsersMessage(message)
             #每个发一份，不过在redis里面只需要存一份，因为只有一个公共聊天室
             notify(message)
     

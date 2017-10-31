@@ -4,12 +4,12 @@ from flask import jsonify, request, current_app, url_for
 from . import api
 import redis
 #注意，不是from ..app，而只是..
-from .. import pool
+
 from twisted.conch.test.test_insults import methods
 from ..util import *
-import json
+
 import random
-import string
+
 #from ..util import getLoginInData,outputJson
 
 #用于最开始，新加入用户。这个是加入私聊，也就是新开房间的聊天
