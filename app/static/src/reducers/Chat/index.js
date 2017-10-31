@@ -16,8 +16,8 @@ let _stores = new Storage(),
 let initStates = {
 		//这个user代表当前用户。img是用户图标
 	user:{
-		name:"Bin",
-		img:"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"
+		name:"defaultUser",
+		img:"/pic/1.jpeg"
 	},
 	//session代表一段会话，默认是和“使用帮助会话”
 	sessions:[
@@ -26,43 +26,15 @@ let initStates = {
 	        id:1,
 	        //包括“使用帮助和默认图标”
 	        user: {
-	            name:"使用帮助",
-	            img:"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"
+	            name:"大厅",
+	            img:"/pic/1.jpeg"
 	        },
 	        //还包括当前一段会话内容，就是messages
 	        messages:[
 	            {
-	                content:"该示例主要使用了react、redux、iscroll、fetch等组件实现模仿实现PC微信聊天，",
+	                content:"欢迎来到公共聊天室",
 	                date: Date.now(),
 	                self: 0
-	            },{
-	                content:"希望能对喜欢react,对于redux还处理迷茫，不知如何入手的小伙伴能起到入门指引",
-	                date: Date.now(),
-	                self: 0
-	            },
-	            {
-	                content:"如有不足之处，欢迎拍砖指出",
-	                date: Date.now(),
-	                self: 0
-	            },
-	            {
-	                content:"如果该项目帮助了您，请记得帮我点颗星，就是对我最大的支持",
-	                date: Date.now(),
-	                self: 0
-	            },
-	            {
-	                content:"项目地址：https://github.com/anLA7856/Python_Websocket_flask_chat",
-	                date: Date.now(),
-	                self: 1
-	            },{
-	                content:"当然如果您在使用的过程中，有不懂的地方，或更好的建议，我们也可以一起来讨论，欢迎加入React\redux技术交流群一起讨论",
-	                date: Date.now(),
-	                self: 0
-	            },
-	            {
-	                content:"QQ技术交流群：**",
-	                date: Date.now(),
-	                self: 1
 	            }
 	        ]
 	    }
@@ -76,7 +48,7 @@ let initStates = {
 	//筛选关键字。
 	filterKey:""
 };
-//当前会话
+//当前会话，代表着，当前处于的会话窗口。
 let currentChat={};
 //如果多个会话，就放入这里面。
 let sessions= [];
@@ -90,7 +62,7 @@ let sessions= [];
  */
 function chatIndex(state = initStates,action){
 	//debugger;
-	//分别选择action的type。
+	//分别选择action的type。action.data就是你执行一项任务，返回的值。
 	switch(action.type){
 		//聊天登录的动作
 		case CHAT_LOGIN:
@@ -98,8 +70,12 @@ function chatIndex(state = initStates,action){
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
 			});
-			// 获取当前默认名字。
-			action.data.sessions.unshift(initStates.sessions[0]);
+			// 获取当前默认名字。，由于我是单人大厅的，所以只需要每次聊天完后，把心messages数据给他就行了。
+			if(action.data.sessions.messages){
+				initStates.sessions[0].messages.unshift(action.data.sessions.messages);
+			}
+
+			//action.data.sessions.unshift(initStates.sessions[0]);
 			//重新构造一个包含原state的属性返回。
 			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
 			//聊天初始化的动作
@@ -111,6 +87,7 @@ function chatIndex(state = initStates,action){
 				return Object.assign({},state,{...initStates,sessions:[]});
 			};
 			if(_store && _store.chatIndex){
+				//本页面刷新，则消息保留。
 				let {sessions,currentUserId,user,id_list}=_store.chatIndex;
 				// console.log(89,sessions);
 				currentChat = (sessions.filter((item)=>item.id==currentUserId)[0]||{});
@@ -126,7 +103,6 @@ function chatIndex(state = initStates,action){
 			});
 			//设置会话的动作。
 		case SET_SESSION:
-			
 			sessions = state.sessions.map((item)=>{
 				if(item.id==action.data){
 					item.status=false;

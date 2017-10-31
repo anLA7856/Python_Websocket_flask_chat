@@ -1,2 +1,3 @@
 /test/
 /app/static/node_modules/
+*.pyc

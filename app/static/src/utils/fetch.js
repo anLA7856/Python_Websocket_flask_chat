@@ -67,7 +67,6 @@ function toJson(resp, options) {
   if (resp.status >= 400) {
     return errorHandler(null, options, resp.status)
   }
-  debugger;
   return resp.json()
 }
 
