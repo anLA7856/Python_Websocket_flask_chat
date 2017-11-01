@@ -69,19 +69,23 @@ class Messages extends Component{
 	}
 	//发送消息，ACTION就是个大集合卧槽
 	save(){
+	   // debugger;
 		let {ACTIONS,_user,_currentId} = this.props;
 		let {content} = this.state;
 		if(this.flag){
-			return false;
+		    //由于更改了逻辑，也就是不是异步ajax发送，而是通过socekt，所以就不用这个判断是否发送成功的bool标志了。
+			//return false;
 		};
 		this.flag = true;
 		//成功传入一个回调函数，失败传入一个回调函数。
 		ACTIONS.send_message({
 			user:_user,id:_currentId,content:content,
 			success:(req)=>{
+			   // debugger;
 				this.flag = false;
 			},
 			error:()=>{
+			    //debugger;
 				this.flag = false;
 			}
 		});
@@ -117,6 +121,7 @@ class Messages extends Component{
 		});
 	}
 	sends(e){
+	    //debugger;
 		if(!this.validate(e)){
 			return false;
 		}else{

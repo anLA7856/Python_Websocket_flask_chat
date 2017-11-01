@@ -4,6 +4,7 @@ import threading
 import hashlib
 import socket
 import base64
+import traceback
 import time
 from .util import *
 
@@ -13,10 +14,14 @@ clients = {}
 
 #通知客户端
 def notify(message):
-    for connection in clients.values():
-        #给每一个客户端线程都send一份
-        connection.send('%c%c%s' % (0x81, len(message), message))
-
+    for key in clients.keys():
+        #给每一个客户端线程都send一份 
+        try:
+            #connection.send(message)
+            clients[key].send('%c%c%s' % (0x81, len(message), message))
+        except Exception, e:
+            print(e)
+            del clients[key]
 #客户端处理线程
 class websocket_thread(threading.Thread):
     def __init__(self, connection, username):
@@ -59,9 +64,9 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
             #如果发送内容大小为0,就不发送。
             if len(data) == 0:
                 continue
-            name = data.split('[~')[0]
-            content = data.split('[~')[1]
-            
+            if not (('[~') in data):
+                return             #
+                            
             #原路返回，记得客户端分析。
             message = data+'[~'+date;
             ##在这里存入大厅的redis缓存中

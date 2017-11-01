@@ -38,8 +38,8 @@ def getRoomNumByUsername(myredis,username):
 
 def getUserByUsername(mydata):
     ownuser = Ownuser()
-    ownuser.createOwnuser('default.jpg',mydata['name'],['name'])
-    ownuser.img = mydata['location']+mydata['picName']
+    ownuser.createOwnuser(mydata[0],mydata[2],mydata[2])
+    ownuser.img = mydata[1]+mydata[0]
     strsss = ownuser.to_json()
     return strsss
 
@@ -65,9 +65,8 @@ def getChatDataByRoomNum(mydata,myredis,roomNum):
         ##下次存的时候，记得是存一个json格式的字符串到redis        
         message = Message()
         message.content = tempMessage.split('[~')[1]
-        message.date = tempMessage.split('[~')[2]
-        
-        if mydata.name == tempMessage.split('[~')[0]:
+        message.date = tempMessage.split('[~')[2]        
+        if mydata[2] == tempMessage.split('[~')[0]:
             message.self = True
         else:
             message.self = False

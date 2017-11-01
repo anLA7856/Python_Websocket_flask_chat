@@ -11,13 +11,14 @@ import classnames from 'classnames';
 import actions from "src/actions";
 import Scroll from 'src/components/common/Scroll';
 import Svg from 'src/components/common/Svg';
+import {getInstance} from 'src/utils/socket'
 
 // import dia from 'src/utils/dia';
 
 import './Index.scss';
 
 
-
+let socket = getInstance()
 //集成父页面传来的props，这样就可以依次乡下传递
 class List extends Component{
 	constructor(props){
@@ -35,6 +36,23 @@ class List extends Component{
 	componentWillUnmount(){
 		clearInterval(this.time);
 	}
+	
+	componentWillMount(){
+	    socket.onmessage = function (msg) {
+            //debugger;
+            if (typeof msg.data == "string") {
+                let data=msg.data;
+                dispatch({
+                    type:RECEIVE_MESSAGE,
+                    data
+                });
+            }
+            else {
+                console.log(req.errorMsg)
+            }
+        };
+	}
+	
 	//去除数组，前num的数组。
 	Random(num){
 		let {_id_list} = this.props;
@@ -60,25 +78,44 @@ class List extends Component{
 	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。定时任务，8s刷新一次。
 	//所以我的集成后的，需要在这里面进行处理。
 	getMessage(){
-	    
-		this.time = setInterval(()=>{
-			let {ACTIONS,_user} = this.props;
-			let id_list = this.Random(3);
-			// return ;
-			if(id_list.length<=0 || this.flag){
-				return false;
-			};
-			this.flag = true;
-			ACTIONS.receive_message({
-//				id_list:id_list,
-//				user:_user,
-				success:req=>{
-					this.flag = false;
-				},error:err=>{
-					this.flag = false;
-				}
-			});
-		},8000);
+	   // debugger;
+	    let {ACTIONS,_user} = this.props;
+	    ACTIONS.receive_message();
+//        let {ACTIONS,_user} = this.props;
+//        let id_list = this.Random(3);
+//        // return ;
+//        if(id_list.length<=0 || this.flag){
+//            return false;
+//        };
+//        this.flag = true;
+//        ACTIONS.receive_message({
+////          id_list:id_list,
+////          user:_user,
+//            success:req=>{
+//                this.flag = false;
+//            },error:err=>{
+//                this.flag = false;
+//            }
+//        });
+//		this.time = setInterval(()=>{
+//		    debugger;
+//			let {ACTIONS,_user} = this.props;
+//			let id_list = this.Random(3);
+//			// return ;
+//			if(id_list.length<=0 || this.flag){
+//				return false;
+//			};
+//			this.flag = true;
+//			ACTIONS.receive_message({
+////				id_list:id_list,
+////				user:_user,
+//				success:req=>{
+//					this.flag = false;
+//				},error:err=>{
+//					this.flag = false;
+//				}
+//			});
+//		},8000);
 		
 		// console.log(y)
 	}

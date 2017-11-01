@@ -52,7 +52,8 @@ let chat =  {
 					console.log(req)
 					if(req.res == 10000){
 						//登录成功，设置值。
-						_store.set(Storage_Key,data.username,120);
+						//debugger
+						_store.set(Storage_Key,data.password,120);
 						//渲染界面，也就是调用dispatch方法，即先调用store，然后reduce。绑定的。
 						dispatch({
 							type:CHAT_LOGIN,
@@ -92,7 +93,7 @@ let chat =  {
 		return (dispatch)=>{
 			const {user,id,content,success,error}=options;
 			//设定为，一个人一次只能跟一种人聊天，即一次只能在一个房间聊天，除非不同浏览器，不同名字。
-			debugger
+			//debugger
 			var sendData=user.name+"[~"+content
 			socket.send(sendData);
 			//socket.send('asdf')
@@ -113,8 +114,9 @@ let chat =  {
 		return (dispatch)=>{
 			//注册监听事件。
             socket.onmessage = function (msg) {
+            	//debugger;
                 if (typeof msg.data == "string") {
-                    let {data}=msg.data;
+                    let data=msg.data;
                     dispatch({
 						type:RECEIVE_MESSAGE,
 						data

@@ -33,11 +33,11 @@ def joinChat():
     if myRedis.sismember('users', username):
         return outputJson('该用户名已经存在，请重新输入！,username aready existed')
     else:
-        mydata = {
-            'picName':str(random.randint(1, 4))+'.jpeg',
-            'location':'/pic/',
-            'name':username
-            } 
+        mydata = []
+        mydata.append(str(random.randint(1, 4))+'.jpeg')
+        mydata.append('/pic/')
+        mydata.append(username)
+
         myRedis.sadd('users', mydata)
         
         #strre = getUserByUsername(username)

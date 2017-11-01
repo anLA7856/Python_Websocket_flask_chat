@@ -13,6 +13,7 @@ class storage {
   }
 
   get(key) {
+
 	  //取得data数据和过期时间。
     const data = this.source,
           timeout = data[`${key}__expires__`]
@@ -22,6 +23,8 @@ class storage {
       this.remove(key)
       return;
     }
+    if(data[key] == 'undefined')
+    	return false;
     //如果value和data[key]相等，那么久把他用json解码。
     const value = data[key]
                 ? JSON.parse(data[key])
@@ -32,6 +35,7 @@ class storage {
   // 设置缓存
   // timeout：过期时间（分钟）
   set(key, value, timeout) {
+	  //debugger;
     let data = this.source
     data[key] = JSON.stringify(value)
     if (timeout)

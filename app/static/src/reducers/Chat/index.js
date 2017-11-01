@@ -80,9 +80,11 @@ function chatIndex(state = initStates,action){
 			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
 			//聊天初始化的动作
 		case CHAT_INIT:
+
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
 			if(!_stores.get(Storage_Key)){
 				// console.log(111)
+				//退出的界面。
 				localStorage.clear();
 				return Object.assign({},state,{...initStates,sessions:[]});
 			};
@@ -135,19 +137,20 @@ function chatIndex(state = initStates,action){
 		//接收消息  
 		case RECEIVE_MESSAGE: 
 			//如果长度为0，不渲染，直接跳过。
+			//debugger;
 			if(action.data.length <= 0){
 				return state;
 			};
 			//判断是谁的，
 			var temp = action.data.split('[~');
-			var tempSelf = false;
-			if(temp[2] == state.user.name){
-				tempSelf = true;
+			var tempSelf = 1;
+			if(temp[0] == state.user.name){
+				tempSelf = 0;
 			}
-			tempJson = {
-					"content": temp[1],
-                    "date": temp[2],
-                    "self": tempSelf
+			var tempJson = {
+					content: temp[1],
+					date: temp[2],
+					self: tempSelf
 			}
 			//还是在initState上面做文章，这里要注意后台返回的数据格式啦，直接返回一个message的格式json串。
 			initStates.sessions[0].messages.unshift(tempJson);
