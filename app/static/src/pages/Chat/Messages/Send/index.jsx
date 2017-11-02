@@ -69,7 +69,6 @@ class Messages extends Component{
 	}
 	//发送消息，ACTION就是个大集合卧槽
 	save(){
-	   // debugger;
 		let {ACTIONS,_user,_currentId} = this.props;
 		let {content} = this.state;
 		if(this.flag){

@@ -8,7 +8,7 @@ if os.path.exists('.env'):
         temp = line.strip().split('=')
         if(len(temp) == 2):
             os.environ[temp[0]] = temp[1]
-            
+
 #引入依赖包。
 from app import create_app
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')

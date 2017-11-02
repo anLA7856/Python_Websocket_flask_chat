@@ -62,14 +62,21 @@ def getChatDataByRoomNum(mydata,myredis,roomNum):
     messages = []
     for i in range(1,length):
         tempMessage = myredis.rpoplpush(roomNum,roomNum)
-        ##下次存的时候，记得是存一个json格式的字符串到redis        
+        ##下次存的时候，记得是存一个json格式的字符串到redis       
+        #姓名，图片，内容，发送时间。 
         message = Message()
-        message.content = tempMessage.split('[~')[1]
-        message.date = tempMessage.split('[~')[2]        
+        message.content = tempMessage.split('[~')[2]
+        message.date = tempMessage.split('[~')[3]        
         if mydata[2] == tempMessage.split('[~')[0]:
             message.self = True
         else:
             message.self = False
+        message.name = tempMessage.split('[~')[0]
+        # 图片信息，从redis里面获得。
+        #message.pic = getPicByNameFromRedis(myredis,message.name);
+        #还是为了提高性能，，直接存到redis里面吧，空间换时间。
+        message.pic = tempMessage.split('[~')[1]
+        
         temp = message.to_json()
         messages.append(temp)
         
@@ -97,8 +104,13 @@ def storeUsersMessage(message):
     myRedis.lpush('room_000',message)
     
 
-
-
+def getPicByNameFromRedis(myredis,name):
+    size = myredis.scard('users')
+    for i in range(1,size):
+        tempUserInfo = myredis.pop('users')
+        if tempUserInfo[2]==name:
+            return tempUserInfo[1]+tempUserInfo[0]
+    return "default.jpeg"
         
         
         

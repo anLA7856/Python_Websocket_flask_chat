@@ -70,17 +70,9 @@ function chatIndex(state = initStates,action){
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
 			});
-			// 获取当前默认名字。，由于我是单人大厅的，所以只需要每次聊天完后，把心messages数据给他就行了。
-			if(action.data.sessions.messages){
-				initStates.sessions[0].messages.unshift(action.data.sessions.messages);
-			}
-
-			//action.data.sessions.unshift(initStates.sessions[0]);
-			//重新构造一个包含原state的属性返回。
-			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
-			//聊天初始化的动作
+			//把默认窗口赋值为当前id。会话消息为当前会话。
+			return Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 		case CHAT_INIT:
-
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
 			if(!_stores.get(Storage_Key)){
 				// console.log(111)
@@ -143,39 +135,35 @@ function chatIndex(state = initStates,action){
 			};
 			//判断是谁的，
 			var temp = action.data.split('[~');
-			var tempSelf = 1;
+			var tempSelf = 0;
 			if(temp[0] == state.user.name){
-				tempSelf = 0;
+				return state;
 			}
 			var tempJson = {
-					content: temp[1],
-					date: temp[2],
+					name:temp[0],
+					pic:temp[1],
+					content: temp[2],
+					date: temp[3],
 					self: tempSelf
 			}
 			//还是在initState上面做文章，这里要注意后台返回的数据格式啦，直接返回一个message的格式json串。
-			initStates.sessions[0].messages.unshift(tempJson);
-//			for(let key in action.data){
-//				console.log(action.data[key])
-//				let {id} = action.data[key];
-//				sessions = state.sessions.map((item)=>{
-//
-//					if(item.id == id && item.id != state.currentUserId){
-//						item.status = true;
-//						item.messages=item.messages.concat(action.data[key].messages);
-//						
-//					};
-//					if(item.id==state.currentUserId){
-//						currentChat= item;
-//					};
-//					return item;
-//				});
-//			};
-			// (sessions.filter((item)=>item.id==state.currentUserId)[0])
-			return Object.assign({},state,{...action.data,id_list,currentUserId:1,currentChat:initStates.sessions[0]});
-//			return Object.assign({},state,{
-//				sessions:sessions,
-//				currentChat:currentChat
-//			});
+			//state.sessions[0].messages.unshift(tempJson);
+			//state.currentChat.messages.unshift(tempJson);
+			//现在的问题是，数据收到了到state里面了，但是没有刷新。
+			//debugger;
+			sessions = state.sessions.map((item)=>{
+				//当前会话。
+				if(item.id==state.currentUserId){
+					//直接往后面加
+					item.messages=item.messages.concat(tempJson);
+					currentChat= item;
+				};
+				return item;
+			});
+			return Object.assign({},state,{
+				sessions:sessions,
+				currentChat:currentChat
+			});
 		//	关闭会话的动作。也就是退出。
 		case SET_DESTROY: 
 			let _sessions = state.sessions.filter((item)=>item.id !== state.currentUserId);

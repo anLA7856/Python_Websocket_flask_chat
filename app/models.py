@@ -5,12 +5,16 @@ import json
 from flask import *
 
 class Message():
+    name=""
+    pic=""
     content=""
     date=""
     self=""
     
     def to_json(self):
         json_message = {
+            'name':self.name,
+            'pic':self.pic,
             'content': self.content,
             'date': self.date,
             'self': self.self

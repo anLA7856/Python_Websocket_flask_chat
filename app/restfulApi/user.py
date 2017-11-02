@@ -37,8 +37,10 @@ def joinChat():
         mydata.append(str(random.randint(1, 4))+'.jpeg')
         mydata.append('/pic/')
         mydata.append(username)
-
-        myRedis.sadd('users', mydata)
+        
+        #还是以数组的方式存进去吧。
+        strData = mydata[0] + "[~" + mydata[1]+"[~"+mydata[2];
+        myRedis.sadd('users', strData)
         
         #strre = getUserByUsername(username)
         #return strre
