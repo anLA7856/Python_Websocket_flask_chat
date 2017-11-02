@@ -53,7 +53,6 @@ class Messages extends Component{
 	//render方法。
 	render(){
 		let {_user,_currentChat} = this.props;
-		
 		return ( 
 		        /*message-w代表整个聊天框
 		         * */

@@ -69,19 +69,35 @@ class Sessions():
         }
         return json_sessions
     
+class CurrentUser():
+    name=""
+    img=""
+    
+    def to_json(self):
+        json_currentUser = {
+            'name': self.name,
+            'img': self.img
+        }
+        return json_currentUser
+    
+     
 class ReturnJson():
     res=""
     #这个user是ownuser。
     user=""
     sessions=""
     message=""
+    currentUsers=""
     
     def to_json(self):
         json_returnJson = jsonify({
             'res' : self.res,
             'user': self.user,
             'sessions': self.sessions,
-            'message': self.message
+            'message': self.message,
+            'currentUsers':self.currentUsers
         })
         return json_returnJson
+    
+
 

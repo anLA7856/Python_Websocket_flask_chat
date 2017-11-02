@@ -83,23 +83,24 @@ class List extends Component{
 	}
 	//使用setsession，来切换不同的会话。
 	render(){
-		let {_filterKey,_sessions,_currentId,_currentChat,ACTIONS} = this.props;
+		let {_filterKey,_sessions,_currentUsers,_currentId,_currentChat,ACTIONS} = this.props;
+		debugger;
 		return ( 
 			<div className="list-wrap">
 				<div className="list">
 					<Scroll allowScroll={false} scrollbar="custom">
 					    <ul>
 					    	{
-					    	_sessions.map((item,i)=>{
+					    	    _currentUsers.map((item,i)=>{
 					    		return (
 					    			<li key={"index"+i} className={classnames({
 					    				"active":(item.id === _currentId&&_currentId==_currentChat.id),
-					    				"hide":(_filterKey != "" && item.user.name.indexOf(_filterKey) < 0)
-					    			})} onClick={()=>ACTIONS.set_session(item.id)}>
+					    				"hide":(_filterKey != "" && item.name.indexOf(_filterKey) < 0)
+					    			})} >
 							            <p className="avatar">
-							                <img   width="40" height="40"src={item.user.img||"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"} />
+							                <img   width="40" height="40"src={item.img||"https://ps.ssl.qhimg.com/t01531c2d8bd3dbe644.jpg"} />
 							            </p>
-							            <p className="name">{item.user.name}</p>
+							            <p className="name">{item.name}</p>
 							            {item.status?(<i className={classnames("dot")} ></i>):(null)}
 							        </li>
 					    		);
@@ -127,16 +128,18 @@ class List extends Component{
 	}
 };
 
-//让react和redux关联起来。
+//让react和redux关联起来。，
+//这样，才会把大管家的东西，如果自己需要，就从大管家那里拿一份。
 let mapStateToProps=(state)=>{
-	let {sessions,user,id_list,filterKey,currentChat,currentUserId} = state.chatIndex;
+	let {sessions,user,id_list,filterKey,currentChat,currentUserId,currentUsers} = state.chatIndex;
 	return {
 		_sessions:sessions,
 		_user:user,
 		_id_list:id_list,
 		_filterKey:filterKey,
 		_currentChat:currentChat,
-		_currentId:currentUserId
+		_currentId:currentUserId,
+		_currentUsers:currentUsers
 	};
 }; 
 

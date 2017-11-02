@@ -66,13 +66,16 @@ function chatIndex(state = initStates,action){
 	switch(action.type){
 		//聊天登录的动作
 		case CHAT_LOGIN:
+			debugger;
 			//里面有，就说明已经登录了的情况，所以直接返回咯。
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
 			});
 			//把默认窗口赋值为当前id。会话消息为当前会话。
+			var t = Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 			return Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 		case CHAT_INIT:
+			debugger;
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
 			if(!_stores.get(Storage_Key)){
 				// console.log(111)

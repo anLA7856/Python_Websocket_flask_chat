@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from ..models import Message,Ownuser,User,Sessions,ReturnJson
+from ..models import Message,Ownuser,User,Sessions,ReturnJson,CurrentUser
 
 
 import json
@@ -25,6 +25,7 @@ def getLoginInData(myredis,mydata):
     returnJson.user = getUserByUsername(mydata)
     returnJson.sessions = getSessionsByRoomNum(mydata,myredis, roomNum)
     returnJson.message = 'ok'
+    returnJson.currentUsers = getCurrentUsersFromTheHoll(myredis);
     tes = returnJson.to_json()
     return tes
     
@@ -111,6 +112,22 @@ def getPicByNameFromRedis(myredis,name):
         if tempUserInfo[2]==name:
             return tempUserInfo[1]+tempUserInfo[0]
     return "default.jpeg"
+
+#一开始登录时候，获得大厅聊天室的所有聊天人员
+#userOnlyNames能够控制，每次进入时候，名字只能唯一，所以才能够加入到users中，而users里面绑定了头像图片，所以
+#这里我们直接从users里面获取信息。
+def getCurrentUsersFromTheHoll(myredis):
+    returnUsers = []
+    users = myredis.smembers('users')
+    for user in users:
+        currentUser = CurrentUser()
+        userArray = user.split('[~')
+        currentUser.name = userArray[2]
+        currentUser.img = userArray[1]+userArray[0]
+        tempJson = currentUser.to_json()
+        returnUsers.append(tempJson)
+    return returnUsers
+    
         
         
         
