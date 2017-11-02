@@ -53,6 +53,7 @@ class Messages extends Component{
 	//render方法。
 	render(){
 		let {_user,_currentChat} = this.props;
+		
 		return ( 
 		        /*message-w代表整个聊天框
 		         * */
@@ -80,9 +81,12 @@ class Messages extends Component{
 			            				}
 						                
 						                <div className={classnames("main",{"self":item.self})}>
-						                    <img className="avatar" width="35" height="35"src={item.self ? _user.img:_currentChat.user.img}/>
-						                    <div className="text" dangerouslySetInnerHTML={{ __html: this.link(item.content) }} />
-						                </div>
+						                    <img className="avatar" width="35" height="35"src={item.self ? _user.img:item.pic}/>
+						                    <div >
+			            				        <p>{item.self ? _user.name:item.name}</p>
+			            				        <div className="text" dangerouslySetInnerHTML={{ __html: this.link(item.content) }} />
+						                    </div>
+			            				</div>
 						            </li>
 			            		);
 			            	})

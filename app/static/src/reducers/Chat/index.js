@@ -61,7 +61,6 @@ let sessions= [];
  * @returns
  */
 function chatIndex(state = initStates,action){
-	//debugger;
 	//分别选择action的type。action.data就是你执行一项任务，返回的值。
 	switch(action.type){
 		//聊天登录的动作
@@ -129,7 +128,6 @@ function chatIndex(state = initStates,action){
 		//接收消息  
 		case RECEIVE_MESSAGE: 
 			//如果长度为0，不渲染，直接跳过。
-			//debugger;
 			if(action.data.length <= 0){
 				return state;
 			};
@@ -150,7 +148,6 @@ function chatIndex(state = initStates,action){
 			//state.sessions[0].messages.unshift(tempJson);
 			//state.currentChat.messages.unshift(tempJson);
 			//现在的问题是，数据收到了到state里面了，但是没有刷新。
-			//debugger;
 			sessions = state.sessions.map((item)=>{
 				//当前会话。
 				if(item.id==state.currentUserId){

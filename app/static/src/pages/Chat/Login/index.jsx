@@ -21,7 +21,6 @@ import './Index.scss';
 
 class Login extends Component {
     constructor( props ) {
-      //  debugger;
         super( props );
         //自定义set和state
         this.flag = false;

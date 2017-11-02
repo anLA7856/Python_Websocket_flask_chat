@@ -80,11 +80,9 @@ class Messages extends Component{
 		ACTIONS.send_message({
 			user:_user,id:_currentId,content:content,
 			success:(req)=>{
-			   // debugger;
 				this.flag = false;
 			},
 			error:()=>{
-			    //debugger;
 				this.flag = false;
 			}
 		});

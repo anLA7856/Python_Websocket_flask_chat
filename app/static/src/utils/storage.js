@@ -35,7 +35,6 @@ class storage {
   // 设置缓存
   // timeout：过期时间（分钟）
   set(key, value, timeout) {
-	  //debugger;
     let data = this.source
     data[key] = JSON.stringify(value)
     if (timeout)

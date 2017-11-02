@@ -12,7 +12,6 @@ promise.polyfill();
 
 // fetchjson的方法，通过请求url的方式。
 export const fetchJson = (options) => {
-	//debugger;
 //options.url ="https://easy-mock.com/mock/59294d8e91470c0ac1fe8a4c/staff"+options.url;
 	options.url ="http://localhost:5000/api/v1.0"+options.url
 	//从传入的option里面获得一些数据。
@@ -35,7 +34,6 @@ export const fetchJson = (options) => {
     opts.body = JSON.stringify(data)
   }
 	var t = opts;
-	//  debugger;
 	//开始拿。
   fetch(url, opts)
     .then(resData => toJson(resData, opts))
@@ -79,7 +77,6 @@ function toJson(resp, options) {
  * @returns
  */
 function resHandler(resData, options) {
-	// debugger;
 	// 出错
   if (resData.status && resData.status != 200) {
     return errorHandler(resData.error, options, resData.status);

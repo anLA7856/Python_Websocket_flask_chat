@@ -39,7 +39,6 @@ class List extends Component{
 	
 	componentWillMount(){
 	    socket.onmessage = function (msg) {
-            //debugger;
             if (typeof msg.data == "string") {
                 let data=msg.data;
                 dispatch({
@@ -78,46 +77,9 @@ class List extends Component{
 	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。定时任务，8s刷新一次。
 	//所以我的集成后的，需要在这里面进行处理。
 	getMessage(){
-	   // debugger;
 	    let {ACTIONS,_user} = this.props;
 	    ACTIONS.receive_message();
-//        let {ACTIONS,_user} = this.props;
-//        let id_list = this.Random(3);
-//        // return ;
-//        if(id_list.length<=0 || this.flag){
-//            return false;
-//        };
-//        this.flag = true;
-//        ACTIONS.receive_message({
-////          id_list:id_list,
-////          user:_user,
-//            success:req=>{
-//                this.flag = false;
-//            },error:err=>{
-//                this.flag = false;
-//            }
-//        });
-//		this.time = setInterval(()=>{
-//		    debugger;
-//			let {ACTIONS,_user} = this.props;
-//			let id_list = this.Random(3);
-//			// return ;
-//			if(id_list.length<=0 || this.flag){
-//				return false;
-//			};
-//			this.flag = true;
-//			ACTIONS.receive_message({
-////				id_list:id_list,
-////				user:_user,
-//				success:req=>{
-//					this.flag = false;
-//				},error:err=>{
-//					this.flag = false;
-//				}
-//			});
-//		},8000);
-		
-		// console.log(y)
+
 	}
 	//使用setsession，来切换不同的会话。
 	render(){

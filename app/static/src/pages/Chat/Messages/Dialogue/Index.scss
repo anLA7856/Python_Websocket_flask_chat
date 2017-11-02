@@ -119,6 +119,31 @@
             margin: 0 10px 0 0;
             border-radius: 100px;
         }
+        .name {
+        	display: inline-block;
+            position: relative;
+            padding: 4.5px 10px;
+            max-width: calc(100% - 150px);
+            min-height: 30px;
+            line-height:21px;
+            font-size: 12px;
+            text-align: left;
+            word-break: break-all;
+            background-color: #f7fcff;
+            border-radius: 4px;
+            margin: 11px 0 0;
+            a.link{
+                color:#1144e7;
+            }
+            &:before {
+                content: " ";
+                position: absolute;
+                top: 9px;
+                right: 100%;
+                border: 6px solid transparent;
+                border-right-color: #f7fcff;
+            }
+        }
         .text {
             display: inline-block;
             position: relative;
@@ -131,7 +156,7 @@
             word-break: break-all;
             background-color: #f7fcff;
             border-radius: 4px;
-            margin: 3px 0 0;
+            margin: -1px 4px 0;
             a.link{
                 color:#1144e7;
             }
