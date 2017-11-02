@@ -56,11 +56,11 @@ let chat =  {
 						dispatch({
 							type:CHAT_LOGIN,
 							data:req
-						});
-						//socket连接：
-						
+						});				
 					}else{
-
+						
+						alert("进入房间失败，用户名已存在，请换一个吧！");	
+						window.location.reload();
 					};
 					success&&success(req);
 				},

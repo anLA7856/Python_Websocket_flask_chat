@@ -26,7 +26,7 @@ class Login extends Component {
         this.flag = false;
         this.state = {
             password: '',
-            error: "请输入已存在房间号，不存在将新建房间"
+            error: "请随意输入一个名字，重复将不得进入"
         };
     }
     //set方法，通过e传过来的target，动态设定值，名字非name！获取name属性里面含有的值
@@ -65,10 +65,7 @@ class Login extends Component {
             } );
         };
     }
-    //进入大厅聊天室的方法
-    joinHoll() {
-        
-    }
+
     keyUp( e ) {
         //键盘监听，回车
         if ( e.keyCode === 13 ) {
@@ -84,11 +81,9 @@ class Login extends Component {
                 <p className="row account"><input className="lg-inp" type="text" onChange={( e ) => this.set( e )} onKeyUp={( e ) => this.keyUp( e )} name="password" placeholder="房间号" /></p>
                 <p className="row-error" id="error" style={{ color: "red" }}>{error}</p>
                 <div className="login-btn">
-                    <a href="javascript:void(0)" id="submit" onClick={() => this.submit()} >进入</a>
+                    <a href="javascript:void(0)" id="submit" onClick={() => this.submit()} >进入聊天室</a>
                 </div>
-                <div className="login-btn1">
-                    <a className="login-holl" href="javascript:void(0)" id="joinHoll" onClick={() => this.joinHoll()}> >>>>>进入公共聊天室</a>
-                </div>
+
             </div>
         );
     }

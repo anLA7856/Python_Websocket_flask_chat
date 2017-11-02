@@ -30,7 +30,8 @@ def joinChat():
         #username = '1232'
     #判断redis里面的users是否存在
     #开始在编写测试的时候，把string里面一个也命名为users，总报错说key有问题，用del users删了就没事了
-    if myRedis.sismember('users', username):
+    if myRedis.sismember('usersOnlyName', username):
+        print('该用户名已经存在，请重新输入！,username aready existed');
         return outputJson('该用户名已经存在，请重新输入！,username aready existed')
     else:
         mydata = []
@@ -40,6 +41,8 @@ def joinChat():
         
         #还是以数组的方式存进去吧。
         strData = mydata[0] + "[~" + mydata[1]+"[~"+mydata[2];
+        #多分出一个set，防止用户名重复。
+        myRedis.sadd('usersOnlyName',username)
         myRedis.sadd('users', strData)
         
         #strre = getUserByUsername(username)
