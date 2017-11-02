@@ -59,7 +59,7 @@ class Messages extends Component{
 		         * */
 			<section className="message-w">
 				<header className="group-name">
-					<h3>{_currentChat.user.name}</h3>
+					<h3>公共聊天室</h3>
 				</header>
 			    <div className="message" >
 			    	<Scroll allowScroll={false} isToBottom={true} scrollbar="custom" scrollTo={(y)=>this._goTo(y)}>

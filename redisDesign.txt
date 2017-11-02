@@ -16,7 +16,7 @@ location:pic
 name:username
 }
 
-而大厅聊天室的数据，则是一个list。
+而大厅聊天室的数据，则是一个list。list不能设置过期时间，本来还想设置过期时间的。
 名字就叫做room_001
 而存的也是一个结构体json：
 {
