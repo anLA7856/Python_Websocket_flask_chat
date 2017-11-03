@@ -3,7 +3,7 @@
  * @date    :2017-10-25
  * @description :进行真正异步传输的地方。
  */
-
+import {API_SERVER_IP} from "src/constants/Chat";
 import promise from 'es6-promise'
 import fetch from 'isomorphic-fetch'
 // import StaticToast from 'src/components/common/toast'
@@ -13,7 +13,7 @@ promise.polyfill();
 // fetchjson的方法，通过请求url的方式。
 export const fetchJson = (options) => {
 //options.url ="https://easy-mock.com/mock/59294d8e91470c0ac1fe8a4c/staff"+options.url;
-	options.url ="http://localhost:5000/api/v1.0"+options.url
+	options.url ="http://"+API_SERVER_IP+"/api/v1.0"+options.url
 	//从传入的option里面获得一些数据。
 	const { url, type, data, ...others } = options;
 	let opts = {

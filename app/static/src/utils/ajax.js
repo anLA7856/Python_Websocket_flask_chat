@@ -1,3 +1,5 @@
+import {API_SERVER_IP} from "src/constants/Chat";
+
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
@@ -6,7 +8,7 @@
  */
 export const ajaxJson = (options) => {
 
-  options.url ="http://localhost:5000/api/v1.0/"+options.url;
+  options.url ="http://"+API_SERVER_IP+"/api/v1.0/"+options.url;
 
   const { url, type, data, ...others } = options;
 

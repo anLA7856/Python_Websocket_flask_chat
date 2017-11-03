@@ -112,7 +112,7 @@ class websocket_server(threading.Thread):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # 把服务绑定到对应的ip和给定的端口。 
-        sock.bind(('127.0.0.1', self.port))
+        sock.bind(('0.0.0.0', self.port))
         #给系统建议的连接数，启动socket 网络监听服务,一直监听client的网络请求  
         sock.listen(5)
         print 'websocket server started!'
