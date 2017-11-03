@@ -39,11 +39,15 @@ class List extends Component{
 	
 	componentWillMount(){
 	   
+	    let {ACTIONS} = this.props;
 	    socket.onmessage = function (msg) {
             if (typeof msg.data == "string") {
                 let data=msg.data;
-                dispatch({
-                    type:RECEIVE_MESSAGE,
+//                dispatch({
+//                    type:RECEIVE_MESSAGE,
+//                    data
+//                });
+                ACTIONS.receive_message({
                     data
                 });
             }

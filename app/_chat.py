@@ -55,9 +55,6 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
                 clients.pop(self.username)
                 break
             
-           # myData = json.loads(data)
-           # name = myData['name']
-           # content = myData['content']
             date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
                 
             data = self.parse_data(data)
@@ -132,6 +129,3 @@ class websocket_server(threading.Thread):
             except socket.timeout:
                 print 'websocket connection timeout!'
 
-#if __name__ == '__main__':
-#    server = websocket_server(9000)
-#    server.start()

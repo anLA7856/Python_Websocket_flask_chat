@@ -110,18 +110,10 @@ let chat =  {
 	receive_message:(options)=>{
 		return (dispatch)=>{
 			//注册监听事件。
-            socket.onmessage = function (msg) {
-                if (typeof msg.data == "string") {
-                    let data=msg.data;
-                    dispatch({
-						type:RECEIVE_MESSAGE,
-						data
-					});
-                }
-                else {
-                	console.log(req.errorMsg)
-                }
-            };
+			 dispatch({
+					type:RECEIVE_MESSAGE,
+					options
+			});
 
 		};
 	},

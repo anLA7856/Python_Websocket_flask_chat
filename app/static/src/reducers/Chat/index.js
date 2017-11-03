@@ -129,11 +129,11 @@ function chatIndex(state = initStates,action){
 		//接收消息  
 		case RECEIVE_MESSAGE: 
 			//如果长度为0，不渲染，直接跳过。
-			if(action.data.length <= 0){
+			if(action.options.data.length <= 0){
 				return state;
 			};
 			//判断是谁的，
-			var temp = action.data.split('[~');
+			var temp = action.options.data.split('[~');
 			var tempSelf = 0;
 			if(temp[0] == state.user.name){
 				return state;
