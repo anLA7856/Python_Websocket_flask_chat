@@ -7,7 +7,7 @@
  * state变化会导致重新渲染ui。
  */
 
-import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT} from "src/constants/Chat";
+import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT,UPDATE_USERS} from "src/constants/Chat";
 import Storage from 'src/utils/storage';
 let _stores = new Storage(),
 	Storage_Key = 'username';
@@ -71,7 +71,6 @@ function chatIndex(state = initStates,action){
 				return item.id;
 			});
 			//把默认窗口赋值为当前id。会话消息为当前会话。
-			var t = Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 			return Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 		case CHAT_INIT:
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
@@ -163,15 +162,12 @@ function chatIndex(state = initStates,action){
 				sessions:sessions,
 				currentChat:currentChat
 			});
-		//	关闭会话的动作。也就是退出。本应用这里是指关闭浏览器
-		case SET_DESTROY: 
-			let _sessions = state.sessions.filter((item)=>item.id !== state.currentUserId);
-			// (sessions.filter((item)=>item.id==state.currentUserId)[0])
-			return Object.assign({},state,{
-				sessions:_sessions,
-				currentChat:_sessions[0],
-				currentUserId:_sessions[0].id
-			});
+		//	定时任务从服务器中获取当前大厅聊天人员人数。
+		case UPDATE_USERS:
+			//里面有，就说明已经登录了的情况，所以直接返回咯。
+			//把默认窗口赋值为当前id。会话消息为当前会话。
+			var t = Object.assign({},state,{currentUsers:action.data});
+			return Object.assign({},state,{currentUsers:action.data});
 		//退出
 		case SET_LOGOUT:
 			localStorage.clear();

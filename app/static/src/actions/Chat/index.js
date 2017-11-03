@@ -22,7 +22,7 @@
 import {ajaxJson} from "src/utils/ajax";
 import {fetchJson} from "src/utils/fetch";
 import Storage from 'src/utils/storage';
-import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT} from "src/constants/Chat";
+import {CHAT_LOGIN,SET_SESSION,FILTER_SEARCH,CHAT_INIT,SEND_MESSAGE,RECEIVE_MESSAGE,SET_DESTROY,SET_LOGOUT,UPDATE_USERS} from "src/constants/Chat";
 import {getInstance} from 'src/utils/socket'  
 
 //定义一个_store对象。
@@ -125,14 +125,31 @@ let chat =  {
 
 		};
 	},
-	//送客,本应用是指关闭浏览器
-	set_destroy:(options)=>{
-		
-		//本来打算当关闭浏览器时候实现的，
+	//用于定时任务，从服务器中取得当前人员名单。
+	update_users:(options)=>{
+		return (dispatch)=>{
+			let {success,error} = options;
+			fetchJson({
+				type:"get",
+				url:"/user/update",
+				success:req=>{
+					var data = req;
+					console.log(req)
+					dispatch({
+						type:UPDATE_USERS,
+						data
+					});
+					success&&success(req);
+				},
+				error:err=>{
+					console.log(err);
+					error&&error();
+				}
+			});
+		};
 	},
 	set_logout:(data)=>{
 		//注销登录。,走一遍服务器，把名字删除。
-		
 		return (dispatch)=>{
 			const user=data;
 			if(user.name == "defaultUser"){
@@ -142,7 +159,8 @@ let chat =  {
 				type:"get",
 				url:"/user/delete/"+user.name,
 				success:req=>{
-					console.log(req)
+					data = req;
+					console.log(req);
 					dispatch({
 						type:SET_LOGOUT,
 						data

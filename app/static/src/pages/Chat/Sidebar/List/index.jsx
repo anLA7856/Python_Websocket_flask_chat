@@ -32,12 +32,13 @@ class List extends Component{
 	componentDidMount(){
 		this.getMessage();
 	}
-	//组件将要被清除的时候，就清除自己的所有。
+	//组件将要被清除的时候，就清除自己的定时器。。
 	componentWillUnmount(){
-		clearInterval(this.time);
+		//clearInterval(this.time);
 	}
 	
 	componentWillMount(){
+	   
 	    socket.onmessage = function (msg) {
             if (typeof msg.data == "string") {
                 let data=msg.data;
@@ -76,11 +77,23 @@ class List extends Component{
 	    return return_array;
 	}
 	//获取数据，也就是方法放到列表中去获取。，获取random用户数据。定时任务，8s刷新一次。
-	//所以我的集成后的，需要在这里面进行处理。
+	//定时5s从服务器拿一次，用于获取最新的用户列表序列。
 	getMessage(){
-	    let {ACTIONS,_user} = this.props;
-	    ACTIONS.receive_message();
-
+        this.time = setInterval(()=>{
+            let {ACTIONS} = this.props;
+            if(this.flag){
+                return false;
+            };
+            this.flag = true;
+            //不管成功或失败，只有进行完这一次才能进行下一次。
+            ACTIONS.update_users({
+                success:req=>{
+                    this.flag = false;
+                },error:err=>{
+                    this.flag = false;
+                }
+            });
+        },5000);
 	}
 	//使用setsession，来切换不同的会话。
 	render(){

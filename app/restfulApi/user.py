@@ -48,13 +48,12 @@ def joinChat():
         #strre = getUserByUsername(username)
         #return strre
         strre = getLoginInData(myRedis,mydata)
-        print(strre)
         return strre
 
 
     
     
-#用于，当用户关闭浏览器的时候，将该用户从大厅中清除
+#用于，当用户点击注销登录的时候，将该用户从大厅中清除
 @api.route('/user/delete/<username>',methods=['get','post'])
 def deleteUser(username):
     #每一个连接，都返回给一个redis连接。
@@ -62,6 +61,14 @@ def deleteUser(username):
     deleteUserInfoFromRedis(myRedis,username)
     return outputJson('删除成功');
     
+
+#用于客户端的定时任务，从服务器端得到当前仍然在线的聊天人员。
+@api.route('/user/update',methods=['get','post'])
+def updateUserList():
+    myRedis = redis.Redis(connection_pool=pool)
+    returnJson = getCurrentUsersInHoll(myRedis)
+    print(returnJson)
+    return returnJson
     
 
     

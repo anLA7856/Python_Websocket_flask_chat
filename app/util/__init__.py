@@ -7,6 +7,7 @@ import json
 import time
 
 import redis
+from flask import jsonify
 
 #from __main__ import name
 
@@ -129,7 +130,7 @@ def getCurrentUsersFromTheHoll(myredis):
     return returnUsers
     
         
-#用于，用户关闭浏览器的时候，清除redis的人员信息。
+#用于，用户注销登录的时候，清除redis的人员信息。
 def deleteUserInfoFromRedis(myRedis,username):
     #先删除users里面的。
     users = myRedis.smembers('users')
@@ -142,10 +143,19 @@ def deleteUserInfoFromRedis(myRedis,username):
     return
         
         
-        
-        
-        
-        
+#用于定时任务用户获取最新的存在于大厅聊天室人员列表。        
+def getCurrentUsersInHoll(myRedis):
+    users = myRedis.smembers('users')
+    returnUsers=[]
+    for user in users:
+        userArray = user.split('[~')
+        tempUser= User()
+        tempUser.name = userArray[2]
+        tempUser.img = userArray[1]+userArray[0]
+        json = tempUser.to_json()
+        returnUsers.append(json)
+    
+    return jsonify(returnUsers)
         
         
         
