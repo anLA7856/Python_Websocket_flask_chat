@@ -40,7 +40,7 @@ class wechat extends Component {
         //获取当前状态，然后更改。判断是否有值，
         //没有值的话，就说明处于登录状态，所以就是login组件
         return (
-            <div>
+            <div className="myDiv">
                 {_sessions.length > 0 && Object.keys( _user ).length > 0 ? (
                     <section className="wechat">
                         <Sidebar />

@@ -129,7 +129,17 @@ def getCurrentUsersFromTheHoll(myredis):
     return returnUsers
     
         
-        
+#用于，用户关闭浏览器的时候，清除redis的人员信息。
+def deleteUserInfoFromRedis(myRedis,username):
+    #先删除users里面的。
+    users = myRedis.smembers('users')
+    for user in users:
+        if user.split('[~')[2] == username:
+            myRedis.srem('users',user)
+    
+    #在删除usersOnlyName里面的东西。
+    myRedis.srem('usersOnlyName',username)
+    return
         
         
         

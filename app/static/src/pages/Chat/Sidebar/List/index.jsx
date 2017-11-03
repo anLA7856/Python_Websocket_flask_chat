@@ -50,6 +50,7 @@ class List extends Component{
                 console.log(req.errorMsg)
             }
         };
+       
 	}
 	
 	//去除数组，前num的数组。
@@ -83,8 +84,12 @@ class List extends Component{
 	}
 	//使用setsession，来切换不同的会话。
 	render(){
-		let {_filterKey,_sessions,_currentUsers,_currentId,_currentChat,ACTIONS} = this.props;
-		debugger;
+		let {_filterKey,_sessions,_currentUsers,_currentId,_currentChat,ACTIONS,_user} = this.props;
+		//防止刷新时候，由于_cuurentUsers未定义为undefine而抛出错误。
+		if(!_currentUsers){
+		    _currentUsers=[];
+		}
+
 		return ( 
 			<div className="list-wrap">
 				<div className="list">
@@ -114,11 +119,7 @@ class List extends Component{
 			    		<Svg />
 			    		<p className="msg">如果该示例帮助了你，记得去github上帮我点颗星哦</p>
 			    	</a>
-			    	<a className="ic qq"  target="_blank" href="#">
-			    		<Svg hash="#svg-qq" />
-			    		<p className="msg">您在使用的过程中，有不懂的疑问或者bug可以加QQ群，一起交流哦</p>
-			    	</a>
-			    	<span className="ic" title="退出" onClick={()=>this.props.ACTIONS.set_logout()}>
+			    	<span className="ic" title="退出" onClick={()=>this.props.ACTIONS.set_logout(_user)}>
 			    		<Svg hash="#svg-exit" />
 			    	</span>
 			    	<button style={{display:"none"}}>退出登录</button>

@@ -50,6 +50,7 @@ class Messages extends Component{
 		var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/ig
 		return str.replace(reg,'<a className="link" target="_bank" href="$1$2">$1$2</a>')
 	}
+	
 	//render方法。
 	render(){
 		let {_user,_currentChat} = this.props;

@@ -19,12 +19,8 @@ export const fetchJson = (options) => {
 	let opts = {
     ...others,
     method: type || 'get',
-    // credentials: 'include',// 日志上报的，需求注释这一行
     headers: {
     	//特定头。
-    //  'X-Avoscloud-Application-Id': 'toi4KhzlzSCXvIzkI9FHIEt5-gzGzoHsz',
-   //   'X-Avoscloud-Application-Key':'5NNtepVs7mF6R8U8TPjImffo',
-   //   'password':data.password,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }

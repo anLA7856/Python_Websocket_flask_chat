@@ -58,7 +58,6 @@ let chat =  {
 							data:req
 						});				
 					}else{
-						
 						alert("进入房间失败，用户名已存在，请换一个吧！");	
 						window.location.reload();
 					};
@@ -126,36 +125,35 @@ let chat =  {
 
 		};
 	},
-	//送客
+	//送客,本应用是指关闭浏览器
 	set_destroy:(options)=>{
 		
+		//本来打算当关闭浏览器时候实现的，
+	},
+	set_logout:(data)=>{
+		//注销登录。,走一遍服务器，把名字删除。
+		
 		return (dispatch)=>{
-			const {user,id,success,error}=options;
-			ajaxJson({
-				type:"GET",
-				url:"/destroySession?sid="+user.sid+'&openid='+id,
-				success:(req)=>{
-					if(req.res == 10000){
-						let {data}= req;
-						dispatch({
-							type:SET_DESTROY,
-							data: content
-						});
-					}else{
-						console.log(req.errorMsg)
-					};
-					success&&success(req);
-				},error:()=>{
+			const user=data;
+			if(user.name == "defaultUser"){
+				console.log("defaultUser");
+			}
+			fetchJson({
+				type:"get",
+				url:"/user/delete/"+user.name,
+				success:req=>{
+					console.log(req)
+					dispatch({
+						type:SET_LOGOUT,
+						data
+					});
+				},
+				error:err=>{
+					console.log(err);
 					error&&error();
 				}
 			});
 		};
-	},
-	set_logout:(data)=>{
-		return {
-			type:SET_LOGOUT,
-			data
-		}
 	}
 };
 export default chat;

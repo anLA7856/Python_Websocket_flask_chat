@@ -39,6 +39,7 @@ let initStates = {
 	        ]
 	    }
     ],
+    _currentUsers:{},
     //当前会话
 	currentChat:{},
 	//当前会话人id
@@ -61,12 +62,10 @@ let sessions= [];
  * @returns
  */
 function chatIndex(state = initStates,action){
-	//debugger;
 	//分别选择action的type。action.data就是你执行一项任务，返回的值。
 	switch(action.type){
 		//聊天登录的动作
 		case CHAT_LOGIN:
-			debugger;
 			//里面有，就说明已经登录了的情况，所以直接返回咯。
 			let id_list = action.data.sessions.map((item)=>{
 				return item.id;
@@ -75,7 +74,6 @@ function chatIndex(state = initStates,action){
 			var t = Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 			return Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 		case CHAT_INIT:
-			debugger;
 			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
 			if(!_stores.get(Storage_Key)){
 				// console.log(111)
@@ -85,12 +83,12 @@ function chatIndex(state = initStates,action){
 			};
 			if(_store && _store.chatIndex){
 				//本页面刷新，则消息保留。
-				let {sessions,currentUserId,user,id_list}=_store.chatIndex;
+				let {sessions,currentUserId,user,id_list,currentUsers}=_store.chatIndex;
 				// console.log(89,sessions);
 				currentChat = (sessions.filter((item)=>item.id==currentUserId)[0]||{});
-				// return Object.assign({},state,{sessions,currentUserId,user,id_list,currentChat:currentChat,filterKey:""});
+				return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
 			};
-			return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""});
+			return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
 
 		//搜索
 		case FILTER_SEARCH:
@@ -165,7 +163,7 @@ function chatIndex(state = initStates,action){
 				sessions:sessions,
 				currentChat:currentChat
 			});
-		//	关闭会话的动作。也就是退出。
+		//	关闭会话的动作。也就是退出。本应用这里是指关闭浏览器
 		case SET_DESTROY: 
 			let _sessions = state.sessions.filter((item)=>item.id !== state.currentUserId);
 			// (sessions.filter((item)=>item.id==state.currentUserId)[0])

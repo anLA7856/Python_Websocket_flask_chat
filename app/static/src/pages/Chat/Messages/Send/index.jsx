@@ -118,23 +118,13 @@ class Messages extends Component{
 		});
 	}
 	sends(e){
-	    //debugger;
 		if(!this.validate(e)){
 			return false;
 		}else{
 			this.save();
 		};
 	}
-	//销毁。
-	destroy(){
-		let {ACTIONS,_user,_currentId} = this.props;
-		if(_currentId == 1){
-			return;
-		};
-		ACTIONS.set_destroy({
-			user:_user,id:_currentId
-		});
-	}
+
 	//渲染的函数。就是一个套间。class=send的套间。
 	render(){
 		let {tips,content}=this.state;
@@ -142,7 +132,6 @@ class Messages extends Component{
 			<div className="send">
 			    <textarea placeholder="按 Enter 发送, Ctrl + Enter 可换行" ref="textarea" name="content" onKeyUp={(e)=>this.enter(e)}></textarea>
 			    <p className="hadler clearfix">
-			        <button className="fl hide" onClick={()=>this.destroy()}>送客</button>
 			        <button className="fr" onClick={(e)=>this.sends(e,"enter")}>发送</button>
 			        <span className={classnames("tips",{"show":tips})} >不能发送空白信息或特殊字符</span>
 			    </p>

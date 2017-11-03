@@ -24,8 +24,27 @@ class Sidebar extends Component{
 	}
 	//第一次加载后。需要做的。
 	componentDidMount(){
-		//dia(this);
+
 	}
+	
+	componentWillUpdate(nextProps, nextState) {
+	    //本来想实现，一旦关闭浏览器，就代表这个用户退出的，但在react实现监听浏览器关闭略困难。
+ //       let {ACTIONS,_user} = nextProps;
+//        window.onunload = function(event) {
+//            ACTIONS.set_destroy({
+//                user:_user
+//            });
+//         };
+	}
+    
+     componentWillMount(){
+
+           
+     }
+	
+
+	
+	
 	//搜索框的功能
 	search(e){
 		let {value}=e.target;

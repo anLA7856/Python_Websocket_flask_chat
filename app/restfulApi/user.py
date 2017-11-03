@@ -54,8 +54,13 @@ def joinChat():
 
     
     
-    
-    
+#用于，当用户关闭浏览器的时候，将该用户从大厅中清除
+@api.route('/user/delete/<username>',methods=['get','post'])
+def deleteUser(username):
+    #每一个连接，都返回给一个redis连接。
+    myRedis = redis.Redis(connection_pool=pool)
+    deleteUserInfoFromRedis(myRedis,username)
+    return outputJson('删除成功');
     
     
 
