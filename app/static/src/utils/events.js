@@ -1,10 +1,10 @@
-"use strict";
-
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
  * @description :storm 用于在给scroll这个组件提供时间方法。
  */
+"use strict";
+
 module.exports = {
   on: function (el, type, callback) {
 	  //给e1添加on事件监听，如果做了什么事，就调用callback方法。

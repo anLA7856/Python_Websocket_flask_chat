@@ -1,5 +1,5 @@
 #-*- coding:utf8 -*-
-
+#聊天的socket服务器以及处理线程。
 import threading
 import hashlib
 import socket
@@ -54,7 +54,7 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
                 print "unexpected error: ", e
                 clients.pop(self.username)
                 break
-            
+            #写入日期。
             date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
                 
             data = self.parse_data(data)
@@ -83,6 +83,7 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
         mask = msg[p:p+4]
         data = msg[p+4:]
         return ''.join([chr(ord(v) ^ ord(mask[k%4])) for k, v in enumerate(data)])
+    
     #用于解析data里面的header信息。
     def parse_headers(self, msg):
         headers = {}

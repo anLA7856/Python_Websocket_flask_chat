@@ -1,11 +1,10 @@
-import {API_SERVER_IP} from "src/constants/Chat";
-
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
  * @description :
  * ajaxjson的方法。
  */
+import {API_SERVER_IP} from "src/constants/Chat";
 export const ajaxJson = (options) => {
 
   options.url ="http://"+API_SERVER_IP+"/api/v1.0/"+options.url;

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+#用于启动python服务端。
 import os
 #引入环境变量
 if os.path.exists('.env'):
@@ -16,5 +17,4 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 #启动项目
 if __name__ == '__main__':
-   # app.run()
    app.run(host='0.0.0.0',port=5000,debug=True)

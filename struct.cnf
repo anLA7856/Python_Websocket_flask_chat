@@ -1,0 +1,5 @@
+本文件主要介绍服务端系统几个结构：
+包括的restful api
+1、登录功能：@api.route('/user/add',methods=['get','post'])
+2、删除用户信息功能：@api.route('/user/delete/<username>',methods=['get','post'])
+3、更新聊天室人员：@api.route('/user/update',methods=['get','post'])

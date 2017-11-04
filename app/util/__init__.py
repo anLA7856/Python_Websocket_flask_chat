@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+#工具方法包
 from ..models import Message,Ownuser,User,Sessions,ReturnJson,CurrentUser
-
-
 import json
 import time
-
 import redis
 from flask import jsonify
 
-#from __main__ import name
-
-#工具方法包
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 #初始登录，得到初始化json，也一般是进入大厅得到未来24小时会话。

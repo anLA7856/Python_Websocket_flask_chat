@@ -7,10 +7,7 @@ import redis
 
 from twisted.conch.test.test_insults import methods
 from ..util import *
-
 import random
-
-#from ..util import getLoginInData,outputJson
 
 #用于最开始，新加入用户。这个是加入私聊，也就是新开房间的聊天
 @api.route('/user/add',methods=['get','post'])

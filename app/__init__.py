@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+#主方法，启动flask，以及注册路由。
 from flask import Flask
 from flask_cors import *
 from config import config
@@ -8,8 +9,6 @@ from ._chat import websocket_server
 
 
 pool = redis.ConnectionPool(host='127.0.0.1', port=6379)
-
-
 def create_app(config_name):
     app = Flask(__name__)
     #先允许跨域，以后删除
