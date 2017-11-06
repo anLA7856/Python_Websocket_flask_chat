@@ -32,7 +32,18 @@ def joinChat():
         return outputJson('该用户名已经存在，请重新输入！,username aready existed')
     else:
         mydata = []
-        mydata.append(str(random.randint(1, 4))+'.jpeg')
+        #保证30张以内，头像不重复。
+        picture = str(random.randint(1, 30))+'.jpg';
+        i = 0;
+        while (myRedis.sismember('picture', picture)):
+            i = i+1
+            if(i >29):
+                break
+            picture = str(random.randint(1, 30))+'.jpg';
+            
+        myRedis.sadd('picture',picture)
+        
+        mydata.append(picture)
         mydata.append('/pic/')
         mydata.append(username)
         

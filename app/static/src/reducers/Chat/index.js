@@ -17,7 +17,7 @@ let initStates = {
 		//这个user代表当前用户。img是用户图标
 	user:{
 		name:"defaultUser",
-		img:"/pic/1.jpeg"
+		img:"/pic/1.jpg"
 	},
 	//session代表一段会话，默认是和“使用帮助会话”
 	sessions:[
@@ -27,7 +27,7 @@ let initStates = {
 	        //包括“使用帮助和默认图标”
 	        user: {
 	            name:"大厅",
-	            img:"/pic/1.jpeg"
+	            img:"/pic/1.jpg"
 	        },
 	        //还包括当前一段会话内容，就是messages
 	        messages:[

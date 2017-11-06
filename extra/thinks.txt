@@ -1,0 +1,3 @@
+学习React和Redux过程中，从menbin08的项目里面借鉴了很多前端代码的方法。
+特表示感谢。
+[menbin08](https://github.com/meibin08/react-redux-chat) 
