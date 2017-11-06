@@ -154,5 +154,30 @@ def getCurrentUsersInHoll(myRedis):
         
         
         
+#有两种方法解决关闭浏览器时候，将socket清除。
+#1、从客户端，但是网上监听浏览器关闭时候，利用鼠标是否在右上方来实现，这个在linux以及多标签浏览器
+#下不可行
+
+#2、在服务器监听socket是否关闭，这样不能确定客户端是刷新还是关闭，实现起来和本项目有出入。因为在客户端
+#我的设定是给人一种并没有关闭的感觉。
+#想了想，这样的方法应该无法实现，客户端的界面是，刷新从loaclstorage里面拿到数据，
+#给人一种不变的感觉。
+#用来插入用户登录的username，和socket的username，实现键值对统一
+def validateOrInsert(username,connectName):
+    myRedis = redis.Redis(connection_pool=pool)
+    #搜索所有的对，如果没有，就新增。
+    tempData = username+"[~"+connectName
+    if not myRedis.sismember('userconnection', tempData):
+        myRedis.sadd('userconnection',tempData)
         
+    return
+        
+
+#由于socket连接断了，所以就要删除对应socket的用户
+def deleteUserByConnectOut(connectName):
+    #先删除userconnection结构里面的
+    
+    
+    return
+    #再删除user里面的
         
