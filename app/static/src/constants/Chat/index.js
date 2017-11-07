@@ -13,6 +13,8 @@ export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE";
 export const SET_DESTROY = "SET_DESTROY";
 export const SET_LOGOUT = "SET_LOGOUT";
 export const UPDATE_USERS = "UPDATE_USERS";
-export const API_SERVER_IP = "10.210.29.104:5000";
-export const SOCKET_SERVER_IP = "10.210.29.104:9000";
+export const HOME_IP = "192.168.1.107";
+//export const COMPANY_IP = "10.210.29.104";
+export const API_SERVER_IP = HOME_IP+":5000";
+export const SOCKET_SERVER_IP = HOME_IP+":9000";
 
