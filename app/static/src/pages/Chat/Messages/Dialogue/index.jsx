@@ -35,7 +35,6 @@ class Messages extends Component{
 	}
 	//事件，比如几分几秒几年。
 	time(date,prevDate){
-	    debugger;
 		// console.log(date,prevDate)区间，超过这个时间区间，就要显示时间。
 		let Interval  = 2*60*1000;
 		let nowDate = new Date();
