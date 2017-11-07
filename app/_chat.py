@@ -58,8 +58,9 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
                 clients.pop(self.username)
                 break
             #写入日期。
-            date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
-                
+            #date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+            #写入格林乔治时间戳
+            date = str(int(time.time()*1000))    
             data = self.parse_data(data)
             #如果发送内容大小为0,就不发送。
             if len(data) == 0:

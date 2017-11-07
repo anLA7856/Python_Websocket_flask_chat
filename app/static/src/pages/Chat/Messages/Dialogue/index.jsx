@@ -35,13 +35,17 @@ class Messages extends Component{
 	}
 	//事件，比如几分几秒几年。
 	time(date,prevDate){
-		// console.log(date,prevDate)
-		let Interval  = 2*60*1000;//区间
-		let _date = new Date(date);
-		let _prevDate = new Date(prevDate);
-		let ret =_date.getTime() - _prevDate.getTime();
+	    debugger;
+		// console.log(date,prevDate)区间，超过这个时间区间，就要显示时间。
+		let Interval  = 2*60*1000;
+		let nowDate = new Date();
+		nowDate.setTime(date)
+		let intDate = parseInt(date),intPrevDate = parseInt(prevDate);
+		
+		let ret =intDate - intPrevDate;
+
 		if(ret>=Interval){
-			return _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate();
+			return nowDate.toLocaleString();
 		};
 		return "";
 	}

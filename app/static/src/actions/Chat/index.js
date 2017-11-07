@@ -91,14 +91,13 @@ let chat =  {
 			const {user,id,content,success,error}=options;
 			//设定为，一个人一次只能跟一种人聊天，即一次只能在一个房间聊天，除非不同浏览器，不同名字。
 			var sendData=user.name+"[~"+user.img+"[~"+content;
-			debugger;
 			socket.send(sendData);
 			let data=[];
 			data.unshift({
 				name:user.name,
 				pic:user.img,
 				content:content,
-                date: Date.now(),
+                date: new Date().getTime(),
                 self: 1
 			});
 			dispatch({
