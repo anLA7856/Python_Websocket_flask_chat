@@ -55,6 +55,13 @@ class List extends Component{
                 console.log(req.errorMsg)
             }
         };
+        
+        //监听客户端断开。
+        socket.onclose = function (msg) { 
+            
+            alert("连接异常，请重试！") 
+            
+       };
        
 	}
 	
