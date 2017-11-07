@@ -57,7 +57,7 @@ def getChatDataByRoomNum(mydata,myredis,roomNum):
         #先从某个list里面取得所有数据。
     length = myredis.llen(roomNum);
     messages = []
-    for i in range(1,length):
+    for i in range(0,length):
         tempMessage = myredis.rpoplpush(roomNum,roomNum)
         ##下次存的时候，记得是存一个json格式的字符串到redis       
         #姓名，图片，内容，发送时间。 
