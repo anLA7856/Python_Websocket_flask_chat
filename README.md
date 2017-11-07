@@ -19,19 +19,16 @@ Based on **python** ,**real-time** chat.
 
 **下面是效果图：**
 
-![这里写图片描述](http://img.blog.csdn.net/20171106134423397?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYW5MQV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![界面效果图](https://github.com/anLA7856/Python_Websocket_flask_chat/blob/master/extra/2017-11-06%2013-43-55%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 **下面是前端的代码结构：**
 
-![这里写图片描述](http://img.blog.csdn.net/20171106141034506?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYW5MQV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![前端代码截图](https://github.com/anLA7856/Python_Websocket_flask_chat/blob/master/extra/2017-11-06%2014-09-53%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 **Python端代码结构：**
 
-![这里写图片描述](http://img.blog.csdn.net/20171106141132027?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYW5MQV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![python后端代码截图](https://github.com/anLA7856/Python_Websocket_flask_chat/blob/master/extra/2017-11-06%2014-11-21%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
-
-有需要的同学可以从我的github上clone：
-[Python_Websocket_flask_chat](https://github.com/anLA7856/Python_Websocket_flask_chat)
 
 运行本项目
 ### 安装Node.js 
