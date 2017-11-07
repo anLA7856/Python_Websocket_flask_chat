@@ -12,6 +12,19 @@ from .util import *
 global clients
 clients = {}
 
+#开一个线程，用于在服务器端同步数据，同步在线人员的数据，客户端socket存在并且没报错，就说名你这个用户在线，否则，算不在线
+class CheckSocketState(threading.Thread):
+    #不使用锁的原因，因为打算5s一次查询，用锁会降低效率。
+    def run(self):
+        while True:
+            time.sleep(3)
+            if len(clients) == 0:
+                continue
+            
+            updateSocketInfoInRedis(clients);
+        
+        
+        
 #通知客户端
 def notify(message):
     for key in clients.keys():
@@ -24,7 +37,7 @@ def notify(message):
             #注意，是key。key就是那里的username
             deleteUserByConnectOut(key);
             print(e)
-            del clients[key]
+            clients.pop(key)
 #客户端处理线程
 class websocket_thread(threading.Thread):
     def __init__(self, connection, username):
@@ -32,6 +45,8 @@ class websocket_thread(threading.Thread):
         super(websocket_thread, self).__init__()
         self.connection = connection
         self.username = username
+        #服务器socket启动时候，先把redis里面人物信息删除先
+        updateSocketInfoInRedis(clients);
     
     def run(self):
         print 'new websocket client joined!'
@@ -54,8 +69,10 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
             try:
                 data = self.connection.recv(1024)
             except socket.error, e:
+                #出错了，即断开连接。
                 print "unexpected error: ", e
                 clients.pop(self.username)
+                deleteUserByConnectOut(self.username);
                 break
             #写入日期。
             #date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
@@ -133,6 +150,13 @@ class websocket_server(threading.Thread):
                 #new一个客户端。，调用它的init方法，也就是有浏览器端请求来连接时候，此时就new一个socketclient来和连接进行处理。
                 thread = websocket_thread(connection, username)
                 thread.start()
+                
+                #同时把检查user不在线的线程起起来。#不能开线程，如果开线程，那么一开始为空，
+                #如果没有次序优先控制，很容易导致redis里面用户信息永远为empty
+                #checkThread = CheckSocketState()
+                #checkThread.start()
+                
+                
                 #赋值client。最后就是一个全局的clients了，就可以实现群发消息之类的。
                 clients[username] = connection
             except socket.timeout:
