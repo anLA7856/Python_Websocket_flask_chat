@@ -199,4 +199,38 @@ def deleteUserByConnectOut(connectName):
     
     return
     
+#用来同步当前socket连接信息和redis里面存储user信息
+#也就是，keys有的，redis里面才能有，keys没有的，redis里面不能有。
+def updateSocketInfoInRedis(clients):
+    myRedis = redis.Redis(connection_pool=pool)
+    
+    #用于检查后面的东西
+    usernames = {}
+    #遍历userconnect
+    for connection in myRedis.smembers('userconnection'):
+        tempConn = connection.split('[~')[1];
+        tempUsername = connection.split('[~')[0];
+        if not clients.has_key(tempConn):
+            myRedis.srem('userconnection',tempConn)
+        else:
+            usernames[tempUsername] = tempUsername
+    
+    #遍历usersOnlyName
+    for username in myRedis.smembers('usersOnlyName'):
+         if not usernames.has_key(username):
+             myRedis.srem('userOnlyName',username)
+    
+    
+    #遍历users
+    for users in myRedis.smembers('users'):
+        if not usernames.has_key(users.split('[~')[2]):
+            myRedis.srem('users',users)
+            
+    return
+   
+    
+
+    
+    
+    
     
