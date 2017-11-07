@@ -28,7 +28,7 @@ class wechat extends Component {
 
         };
     }
-    //初始头一次加载，
+    //初始头一次加载，,调用chat_init。
     componentDidMount() {
         //dia(this);
         let { ACTIONS } = this.props;

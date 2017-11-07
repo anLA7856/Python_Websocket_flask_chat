@@ -90,7 +90,9 @@ class List extends Component{
             };
             this.flag = true;
             //不管成功或失败，只有进行完这一次才能进行下一次。
+            let{_currentUsers} = this.props;
             ACTIONS.update_users({
+                _currentUsers,
                 success:req=>{
                     this.flag = false;
                 },error:err=>{

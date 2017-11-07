@@ -175,9 +175,28 @@ def validateOrInsert(username,connectName):
 
 #由于socket连接断了，所以就要删除对应socket的用户
 def deleteUserByConnectOut(connectName):
-    #先删除userconnection结构里面的
+    myRedis = redis.Redis(connection_pool=pool)
+    connectNames = myRedis.smembers('userconnection')
+    username = ""
+    #得到connnectName对应的用户名
+    for name in connectNames:
+        if name.split('[~')[1] == connectName:
+            username = name.split('[~')[0]
+            
+    if(not username):
+        return
     
+    #先删除userconnection结构里面的
+    myRedis.srem('userconnection',username+'[~'+connectName)
+    
+    #再删除userOnlyName里面的
+    myRedis.srem('usersOnlyName',username);
+    
+    #再删除users里面的。
+    for name in myRedis.smembers('users'):
+        if name.split('[~')[2] == username:
+            myRedis.srem('users',name)
     
     return
-    #再删除user里面的
-        
+    
+    

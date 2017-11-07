@@ -91,6 +91,7 @@ let chat =  {
 			const {user,id,content,success,error}=options;
 			//设定为，一个人一次只能跟一种人聊天，即一次只能在一个房间聊天，除非不同浏览器，不同名字。
 			var sendData=user.name+"[~"+user.img+"[~"+content;
+			debugger;
 			socket.send(sendData);
 			let data=[];
 			data.unshift({
@@ -119,8 +120,18 @@ let chat =  {
 	},
 	//用于定时任务，从服务器中取得当前人员名单。
 	update_users:(options)=>{
+		let{_currentUsers,success,error} = options;
+		if(!_currentUsers){
+			return (dispatch)=>{
+				dispatch({
+					type:UPDATE_USERS,
+					data:""
+				});
+				success&&success();
+			};
+		}
 		return (dispatch)=>{
-			let {success,error} = options;
+			
 			fetchJson({
 				type:"get",
 				url:"/user/update",

@@ -17,5 +17,5 @@ iii、一个名为room_000的List，用来存储大厅聊天室的数据：
 存储结构：
 用户名，图片，内容，发送时间。 
 
-
+iv、一个名为userconnect的set，保存username和connectionname的映射关系。
 

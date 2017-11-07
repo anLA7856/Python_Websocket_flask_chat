@@ -21,7 +21,8 @@ def notify(message):
             clients[key].send('%c%c%s' % (0x81, len(message), message))
         except Exception, e:
             #出错了，就说明连接断了，所以就去redis里面，把相应的东西删除。顺便把users里面的对应的也删除
-            deleteUserByConnectOut(clients[key].username);
+            #注意，是key。key就是那里的username
+            deleteUserByConnectOut(key);
             print(e)
             del clients[key]
 #客户端处理线程
@@ -67,7 +68,7 @@ Sec-WebSocket-Accept: %s\r\n\r\n' % token)
                 return             #
             
             #把每个端口和用户名对应起来，当用户关闭浏览器断开连接时候，就进行将该用户从在线人员里面除名
-            validateOrInsert(data['[~'][0],self.connection.username);
+            validateOrInsert(data.split('[~')[0],self.username);
             
             
             #原路返回，记得客户端分析。

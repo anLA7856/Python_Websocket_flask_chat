@@ -73,21 +73,27 @@ function chatIndex(state = initStates,action){
 			//把默认窗口赋值为当前id。会话消息为当前会话。
 			return Object.assign({},state,{...action.data,id_list,currentUserId:action.data.sessions[0].id,currentChat:action.data.sessions[0]});
 		case CHAT_INIT:
-			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
-			if(!_stores.get(Storage_Key)){
-				// console.log(111)
-				//退出的界面。
-				localStorage.clear();
-				return Object.assign({},state,{...initStates,sessions:[]});
-			};
-			if(_store && _store.chatIndex){
-				//本页面刷新，则消息保留。
-				let {sessions,currentUserId,user,id_list,currentUsers}=_store.chatIndex;
-				// console.log(89,sessions);
-				currentChat = (sessions.filter((item)=>item.id==currentUserId)[0]||{});
-				return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
-			};
-			return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
+			//不关是刷新还是关闭后重新打开，都要重新登录！这样没事儿，因为最近一段时间聊天数据我已经存到了redis里面了
+			
+			localStorage.clear();
+			return Object.assign({},state,{...initStates,sessions:[]});
+			
+			
+//			var _store = JSON.parse(localStorage.getItem("_store")||"{}");
+//			if(!_stores.get(Storage_Key)){
+//				// console.log(111)
+//				//退出的界面。
+//				localStorage.clear();
+//				return Object.assign({},state,{...initStates,sessions:[]});
+//			};
+//			if(_store && _store.chatIndex){
+//				//本页面刷新，则消息保留。
+//				let {sessions,currentUserId,user,id_list,currentUsers}=_store.chatIndex;
+//				// console.log(89,sessions);
+//				currentChat = (sessions.filter((item)=>item.id==currentUserId)[0]||{});
+//				return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
+//			};
+//			return Object.assign({},state,(_store.chatIndex||{}),{currentChat:currentChat,filterKey:""},currentUsers);
 
 		//搜索
 		case FILTER_SEARCH:
@@ -166,7 +172,10 @@ function chatIndex(state = initStates,action){
 		case UPDATE_USERS:
 			//里面有，就说明已经登录了的情况，所以直接返回咯。
 			//把默认窗口赋值为当前id。会话消息为当前会话。
-			var t = Object.assign({},state,{currentUsers:action.data});
+			//var t = Object.assign({},state,{currentUsers:action.data});
+			if(action.data==""){
+				return state;
+			}
 			return Object.assign({},state,{currentUsers:action.data});
 		//退出
 		case SET_LOGOUT:

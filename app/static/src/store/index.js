@@ -16,6 +16,7 @@ function configStore (){
     let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
     //dev环境开启redux调试，用thunk中间件创建出来的store。激活thunk。并且
     //把reducers放了进去。
+    //在运行createStore时会初始化state, 也就是它内部做一次dispatch, 也就是@@redux/INIT
     let cStore  = createStoreWithMiddleware(reducers,(__DEBUG__ && window.devToolsExtension ? window.devToolsExtension() : undefined));
     return cStore;
 };
