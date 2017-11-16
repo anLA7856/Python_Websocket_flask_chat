@@ -10,7 +10,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import actions from "src/actions";
 import Scroll from 'src/components/common/Scroll'
-// import dia from 'src/utils/dia';
 
 import './Index.scss';
 

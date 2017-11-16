@@ -10,7 +10,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import actions from "src/actions";
 
-import dia from 'src/utils/dia';
 
 import './Index.scss';
 
@@ -29,7 +28,7 @@ class Messages extends Component{
 	}
 	//第一次加载完成之后。
 	componentDidMount(){
-		dia(this);
+		//dia(this);
 	}
 	//输入内容为null的提示。
 	isTisp(){

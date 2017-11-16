@@ -22,7 +22,7 @@ class CheckSocketState(threading.Thread):
                 continue
             
             updateSocketInfoInRedis(clients);
-        
+            
         
         
 #通知客户端
@@ -45,8 +45,7 @@ class websocket_thread(threading.Thread):
         super(websocket_thread, self).__init__()
         self.connection = connection
         self.username = username
-        #服务器socket启动时候，先把redis里面人物信息删除先
-        updateSocketInfoInRedis(clients);
+       
     
     def run(self):
         print 'new websocket client joined!'
@@ -130,12 +129,15 @@ class websocket_server(threading.Thread):
     def __init__(self, port):
         super(websocket_server, self).__init__()
         self.port = port
+        #服务器socket启动时候，先把redis里面人物信息删除先
+        updateSocketInfoInRedis(clients);
 
     def run(self):
         # server 端创建一个socket,linux系统会分配唯一一个socket 编号给它  
         # socket.AF_INET --> 机器网络之间的通信  
         # socket.SOCK_STREAM --> TCP 协议通信(对应UDP)  
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #SQL_SOCKET表示这个属性是设置在套接字层面的，http://blog.csdn.net/linuxerhqt/article/details/6526902
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # 把服务绑定到对应的ip和给定的端口。 
         sock.bind(('0.0.0.0', self.port))

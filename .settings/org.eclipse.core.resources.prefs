@@ -5,5 +5,4 @@ encoding//app/models.py=utf-8
 encoding//app/restfulApi/__init__.py=utf-8
 encoding//app/restfulApi/user.py=utf-8
 encoding//app/util/__init__.py=utf-8
-encoding/config.py=utf-8
 encoding/manage.py=utf-8

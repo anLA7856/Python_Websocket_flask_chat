@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 #用于启动python服务端。
 import os
-#引入环境变量
+#引入系统环境变量
 if os.path.exists('.env'):
     print('import data from .env')
     for line in open('.env'):

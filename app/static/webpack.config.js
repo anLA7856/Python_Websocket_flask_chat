@@ -1,4 +1,6 @@
-//用于运行。
+//用于运行。当执行npm run dev时候，就会自动从根目录下搜查webpack.confg.js
+//注意：在启动了webpack-dev-server后，编译后的文件并没有输出到
+//webpack.config.js中配置的output输出目标文件夹中，而是将实时编译后的文件保存在内存中。
 var webpack = require('webpack');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -7,7 +9,6 @@ var path = require('path');
 
 
 var config = {
-
   entry: {
 	index: './src/pages/route.js'
   },

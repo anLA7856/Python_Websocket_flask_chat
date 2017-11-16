@@ -13,7 +13,6 @@ import Scroll from 'src/components/common/Scroll';
 import Svg from 'src/components/common/Svg';
 import {getInstance} from 'src/utils/socket'
 
-// import dia from 'src/utils/dia';
 
 import './Index.scss';
 
@@ -40,6 +39,7 @@ class List extends Component{
 	componentWillMount(){
 	   
 	    let {ACTIONS} = this.props;
+	    let {_user} = this.props;
 	    socket.onmessage = function (msg) {
             if (typeof msg.data == "string") {
                 let data=msg.data;
@@ -58,8 +58,12 @@ class List extends Component{
         
         //监听客户端断开。
         socket.onclose = function (msg) { 
-            
+            //就相当于注销，通知服务器删除该信息。
             alert("连接异常，请重试！") 
+            if(_user){
+                ACTIONS.set_logout(_user);
+            }
+           
             
        };
        

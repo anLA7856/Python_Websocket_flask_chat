@@ -1,3 +1,6 @@
+/**
+ * 聊天列表的，上下拉框的component
+*/
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe.js';
@@ -19,6 +22,7 @@ class Scroll extends Component {
       if(!this.refs.scrollWrapper){
         return false;
       }
+      //初始化scroll
       this.state.myScroll = new IScroll(this.refs.scrollWrapper, { 
         mouseWheel: true,
         probeType: 3,
@@ -98,7 +102,7 @@ class Scroll extends Component {
     Event.off(document, 'touchmove', this.stopTouchmove);
   }
 
-  render() {    
+  render() {
     const props = this.props;
     const { children, className, ...others } = props; //把所有属性都加上。
     return (

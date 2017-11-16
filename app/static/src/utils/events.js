@@ -1,7 +1,7 @@
 /*
  * @authors :anLA7856
  * @date    :2017-10-25
- * @description :storm 用于在给scroll这个组件提供时间方法。
+ * @description :storm 用于在给scroll这个组件提供事件方法。
  */
 "use strict";
 
